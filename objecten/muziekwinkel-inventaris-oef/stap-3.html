@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Object examen waardige oef</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<script>
+	class Instrument{
+		constructor(naam, type, prijs){
+			this.naam = naam;
+			this.type = type;
+			this.prijs = prijs;
+		}
+
+		getInfo(){
+			return `De ${this.naam} is een ${this.type} en kost €${this.prijs.toFixed(2)}.`
+		}
+
+		applyDiscount(discount){
+			this.prijs = Math.max(0, this.prijs - discount);
+			return this; // method chaining -> Zorg dat methodes zoals applyDiscount een verwijzing naar het object (this)
+			// retourneren.
+		}
+
+		increasePriceByPercentage(percentage){
+			this.prijs = this.prijs + this.prijs * percentage / 100;
+			return this;
+		}
+	}
+
+	class ElectricInstrument extends Instrument{
+		constructor(naam, type, prijs, stroomverbruik) {
+			super(naam, type, prijs);
+			this.stroomverbruik = stroomverbruik;
+		}
+
+		getInfo(){
+			return `De ${this.naam} is een ${this.type}, kost €${this.prijs.toFixed(2)}, en verbruikt ${this.stroomverbruik} watt.`
+		}
+	}
+
+	// Test de subclass
+	const electricGuitar = new ElectricInstrument('Gitaar', 'Snaarinstrument', 299.99, 50);
+	console.log(electricGuitar.getInfo()); // Verwacht: "De elektrische Gitaar is een Snaarinstrument, kost €299.99, en verbruikt 50 watt."
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+</body>
+</html>

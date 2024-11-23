@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Object examen waardige oef</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<script>
+
+/*
+	Oefening 4: Static methodes
+	Maak een class MathUtils met:
+
+			Een static methode add(a, b) die de som van twee getallen retourneert.
+			Een static methode multiply(a, b) die het product van twee getallen retourneert.
+			Probeer deze static methodes aan te roepen zonder een object te maken.
+*/
+
+class MathUtils {
+	static add(a, b) {
+		return a + b;
+	}
+
+	static multiply(a, b) {
+		return a * b;
+	}
+}
+
+// Test
+console.log(MathUtils.add(3, 7)); // Output: 10
+console.log(MathUtils.multiply(4, 5)); // Output: 20
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Muziekwinkel</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<script>
+	class Instrument{
+		constructor(name, type, price){
+			this.name = name;
+			this.type = type;
+			this.price = price;
+		}
+
+		getInfo(){
+			return `De ${this.name} is een ${this.type} en kost €${this.price.toFixed(2)}.`
+		}
+
+		applyDiscount(discount){
+			this.price = Math.max(0, this.price - discount);
+			return this; // method chaining -> Zorg dat methodes zoals applyDiscount een verwijzing naar het object (this)
+			// retourneren.
+		}
+
+		increasePriceByPercentage(percentage){
+			this.price = this.price + this.price * percentage / 100;
+			return this;
+		}
+	}
+
+	class ElectricInstrument extends Instrument{
+		constructor(name, type, price, power) {
+			super(name, type, price);
+			this.power = power;
+		}
+
+		getInfo(){
+			return `De ${this.name} is een ${this.type}, kost €${this.price.toFixed(2)}, en verbruikt ${this.power} watt.`
+		}
+	}
+
+	// Class voor het beheren van een inventaris van muziekinstrumenten
+	class Inventory {
+		constructor() {
+			// Array om instrumenten op te slaan
+			this.instruments = [];
+		}
+		// Methode om een instrument toe te voegen aan de inventaris
+		addInstrument(instrument) {
+			this.instruments.push(instrument);
+		}
+		// Methode om alle instrumenten in de inventaris weer te geven
+		listInstruments() {
+			this.instruments.forEach((instrument) => {
+				console.log(instrument.getInfo());
+			});
+		}
+		// Methode om een instrument te vinden op basis van name
+		findInstrumentByName(name) {
+			return this.instruments.find((instrument) => instrument.name === name);
+		}
+	}
+
+	// Test de Inventory class
+	const inventory = new Inventory();
+	// Voeg instrumenten toe
+	const piano = new Instrument('Piano', 'Toetsinstrument', 1500);
+	const drum = new Instrument('Drum', 'Slaginstrument', 700);
+	const electricGuitar = new ElectricInstrument('Gitaar', 'Snaarinstrument', 1200, 60);
+	inventory.addInstrument(piano);
+	inventory.addInstrument(drum);
+	inventory.addInstrument(electricGuitar);
+	console.log('--- Lijst van instrumenten ---');
+	inventory.listInstruments();
+	console.log('--- Zoek instrument ---');
+	const foundInstrument = inventory.findInstrumentByName('Gitaar');
+	console.log(foundInstrument ? foundInstrument.getInfo() : 'Instrument niet gevonden.');
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+</body>
+</html>

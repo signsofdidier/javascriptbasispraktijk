@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Object examen waardige oef</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<script>
+	class Book {
+		constructor(title, author, price){
+			this.title = title;
+			this.author = author;
+			this.price = price;
+		}
+
+		getInfo(){
+			return `Het boek '${this.title}' door ${this.author} kost €${this.price.toFixed(2)}.`;
+		}
+
+		// nieuwe methode voor het bereken van de discount.
+		// gebruik Math.max zodat de prijs niet onder 0 kan gaan.
+		applyDiscount(discount){
+			this.price = Math.max(0, this.price - discount);
+			return this // method chaining -> Zorg dat methodes zoals applyDiscount een verwijzing naar het object (this)
+			// retourneren.
+		}
+
+		// retourneert de prijs als een string met het euroteken.
+		get formattedPrice(){
+			return `€${this.price.toFixed(2)}`
+		}
+
+		// stelt een nieuwe prijs in door een korting toe te passen
+		set discountedPrice(discount){
+			this.price = Math.max(0, this.price - discount);
+		}
+	}
+
+	class Ebook extends Book{
+		constructor(title, author, price, fileSize) {
+			super(title, author, price);
+			this.fileSize = fileSize;
+		}
+
+		getInfo(){
+			return `Het boek '${this.title}' door ${this.author} (${this.fileSize}MB) kost €${this.price.toFixed(2)}.`;
+		}
+	}
+
+	// Test method chaining
+	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
+	book.applyDiscount(5).applyDiscount(2); // Pas twee kortingen toe
+	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €12.99."
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+</body>
+</html>

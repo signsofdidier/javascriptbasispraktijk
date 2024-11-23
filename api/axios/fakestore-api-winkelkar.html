@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axios fakestore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <style>
+        .card-img-top {
+            height: 180px; /* Standaard hoogte voor alle afbeeldingen */
+            object-fit: contain; /* Zorgt ervoor dat de afbeelding wordt geschaald en bijgesneden */
+            width: 100%; /* Houd de breedte gelijk aan de kaart */
+        }
+
+        .card{
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-warning">
+    <div class="container">
+        <a class="navbar-brand fs-3" href="#"><span class="fw-bold">BROL</span>.com</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 py-2 align-items-center">
+                <li class="nav-item mx-2">
+                    <a class="nav-link active" aria-current="page" href="#">Store</a>
+                </li>
+                <li class="nav-item dropdown mx-2">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Women brol</a></li>
+                        <li><a class="dropdown-item" href="#">Men brol</a></li>
+                        <li><a class="dropdown-item" href="#">Brol Hardware</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item px-lg-2 mx-2">
+                    <a class="nav-link" href="#"><i class="bi bi-person-circle fs-3"></i></a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a type="button" class="btn btn-dark" href="#"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                        <i class="bi bi-cart3"></i> Winkelwagen
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<header id="hero-section" class="bg-warning text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">Kwantiteit over kwaliteit!</h1>
+        <p class="lead fs-3">Brol alsof het voor mezelf zou zijn.</p>
+        <a href="#products-lijst" class="btn btn-dark btn-lg mt-3">Shop nu</a>
+    </div>
+</header>
+
+<section class="container my-5 text-center">
+    <!-- Resultaten -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="products-lijst"></div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
+<script>
+    // Functie om de products op te halen
+    function fakeStore() {
+
+        const url = `https://fakestoreapi.com/products`;
+        // Axios gebruiken om de gegevens op te halen
+        axios.get(url)
+            .then(response => { // hierin zit inhoud van url
+                console.log(response.data);
+
+                const products = response.data; //drinks is hier wat aangepast moet worden volgends de api
+                if (!products) {
+                    // Als er geen products zijn, toon een bericht
+                    document.getElementById("products-lijst").innerHTML = `
+                        <div class="alert alert-warning" role="alert">
+                            Geen products gevonden.
+                        </div>`;
+                    return;
+                }
+
+                // Dynamisch de producten weergeven in cards
+                let outputHTML = '';
+                products.forEach(product => {
+                    /*console.log(product.flags.svg);*/
+                    outputHTML += `
+                        <div class="col" data-aos="fade-up">
+                            <div class="card h-100 text-center">
+                                <img src="${product.image}" class="card-img-top p-3" alt="${product.title}">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                <p class="card-text text-muted mb-2">${product.category}</p>
+                                    <p class="mb-1">Rating: <span class="badge text-bg-primary ms-1">${product.rating.rate}</span></p>
+                                    <h5 class="card-title">${product.title}</h5>
+
+                                    <p class="card-text fs-4 mt-2"><strong>€ ${product.price}</strong></p>
+                                    <a href="#" class="btn btn-warning fs-5"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-cart3 me-2 fs-4"></i> Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Voeg de kaarten toe aan de container
+                document.getElementById("products-lijst").innerHTML = outputHTML;
+            })
+            .catch(error => {
+                console.error("Fout bij het ophalen van gegevens:", error);
+                document.getElementById("products-lijst").innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        Er is een fout opgetreden bij het ophalen van de gegevens.
+                    </div>`;
+            });
+    }
+
+    fakeStore();
+</script>
+
+
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header bg-warning">
+        <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Seg.. </h2>
+
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <p class="fs-3">Niet teveel verwachten eh!</p>
+    </div>
+</div>
+
+
+
+</body>
+</html>

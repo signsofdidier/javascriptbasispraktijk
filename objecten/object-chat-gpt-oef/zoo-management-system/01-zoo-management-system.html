@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Object examen waardige oef</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<script>
+
+/*	Oefening 5: Getter en Setter
+	Maak een class Person met de volgende eigenschappen:
+
+			Een private eigenschap #age.
+			Een getter age om de waarde van #age op te halen.
+			Een setter age om een nieuwe waarde aan #age toe te wijzen, maar controleer dat de leeftijd een positief getal is.
+			Bonus: Voeg een methode celebrateBirthday() toe die de leeftijd met 1 verhoogt.*/
+
+class Person {
+	#age;
+
+	constructor(age) {
+		this.#age = age > 0 ? age : 0; // Validatie
+	}
+
+	get age() {
+		return this.#age;
+	}
+
+	set age(newAge) {
+		if (newAge > 0) {
+			this.#age = newAge;
+		} else {
+			console.log("Leeftijd moet positief zijn.");
+		}
+	}
+
+	celebrateBirthday() {
+		this.#age++;
+		console.log("Gefeliciteerd! Je bent nu", this.#age);
+	}
+}
+
+// Test
+const person = new Person(25);
+console.log(person.age);
+person.celebrateBirthday();
+person.age = -5; // Invalid
+console.log(person.age);
+
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+</body>
+</html>
