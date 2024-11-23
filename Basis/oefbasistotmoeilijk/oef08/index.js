@@ -1,28 +1,24 @@
 /*
-Schrijf een functie factorial(n) die het faculteit van n berekent. Het faculteit
-van een getal n is het product van alle positieve gehele getallen kleiner dan of
-gelijk aan n.
-– Console Test: console.log(factorial(5)); // Verwachte Output: 120
-*/
+Schrijf een functie isPrime(n) die controleert of een getal een priemgetal is.
+    Retourneer true als het een priemgetal is, anders false.
+– Console Test:
+    • console.log(isPrime(7)); // Verwachte Output: true
+• console.log(isPrime(10)); // Verwachte Output: false*/
 
-// 5*4*3*2*1
-/*
-let n = 5;
-let factor = 1;
+function isPrime(n) {
+    // Controleer voor getallen kleiner dan 2 (0 en 1 zijn geen priemgetallen)
+    if (n <= 1) return false;
 
-for(let i = n; i>0 ; i-- ){
-    factor *= i;
-}
-console.log(factor);*/
-
-function factorial(n){
-    let factor = 1;
-
-    for(let i = n; i>0 ; i-- ){
-        factor *= i;
+    // Controleer voor delers van 2 tot √n
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            return false; // Als n deelbaar is door i, is het geen priemgetal
+        }
     }
 
-    return factor;
+    return true; // Als er geen delers zijn gevonden, is het een priemgetal
 }
 
-console.log(factorial(5));
+// Testen van de functie
+console.log(isPrime(7));  // Verwachte output: true
+console.log(isPrime(10)); // Verwachte output: false

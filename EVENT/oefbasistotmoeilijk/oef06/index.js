@@ -1,14 +1,31 @@
 /*
-Toon de Geklikte Coördinaten in de Console
-– Oefening: Voeg een click event toe aan de hele pagina die de coo rdinaten
-van de klikpositie (x, y) in de console logt.
-– Console Test: console.log("Klikpositie: x=100, y=200"); //
-Verwachte Output: Klikpositie: x=100, y=200
+Laat een Bericht Zien bij Focus en Blur op een Invoerveld
+– Oefening: Voeg focus en blur events toe aan een invoerveld. Log
+“Invoerveld gefocust” bij focus en “Invoerveld verlaten” bij blur.
+– Console Test:
+    • console.log("Invoerveld gefocust"); // Verwachte Output:
+Invoerveld gefocust
+• console.log("Invoerveld verlaten"); // Verwachte Output:
+Invoerveld verlaten
 */
 
+let inputveld = document.getElementById("inputveld");
 
-document.addEventListener("click", function(e){
-    console.log(`Klikpositie: x=${e.clientX}, y=${e.clientY}`);
-});
+inputveld.addEventListener('focus', function (event){
+    console.log("Invoerveld gefocust");
+})
 
-// (e) is zelfde als (event)
+inputveld.addEventListener('blur', function (event){
+    console.log("Invoerveld verlaten");
+})
+
+
+/*
+Of KORTER
+
+let inputveld = document.getElementById("inputveld");
+
+inputveld.addEventListener('focus', () => console.log("Invoerveld gefocust"));
+inputveld.addEventListener('blur', () => console.log("Invoerveld verlaten"));
+
+*/

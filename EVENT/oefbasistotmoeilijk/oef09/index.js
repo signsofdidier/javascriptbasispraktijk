@@ -1,19 +1,19 @@
 /*
-Tel het Aantal Keer dat op een Knop is Geklikt
-– Oefening: Voeg een click event toe aan een knop die bijhoudt hoe vaak erop
-is geklikt en dit aantal in de console logt.
+Toon de Inhoud van een Invoerveld tijdens het Typen
+– Oefening: Voeg een input event toe aan een invoerveld dat telkens wanneer
+de gebruiker iets typt, de huidige inhoud van het veld in de console toont.
 – Console Test:
-    • console.log("Knop geklikt: 1 keer"); // Verwachte Output:
-Knop geklikt: 1 keer
-• console.log("Knop geklikt: 2 keer"); // Verwachte Output:
-Knop geklikt: 2 keer
+    • console.log("Invoer: Hallo"); // Verwachte Output: Invoer:
+Hallo
+• console.log("Invoer: Hallo Wereld"); // Verwachte Output:
+Invoer: Hallo Wereld
 */
 
-let knop = document.getElementById("telKnop");
-let klikTeller = 0;
+const invoerveld = document.getElementById("invoerveld");
 
-knop.addEventListener('click', function (e){
-    klikTeller++;
-    console.log(`Knop geklikt: ${klikTeller} keer`);
-});
+invoerveld.addEventListener("input", function (e){
+    console.log(`Invoer: ${e.target.value}`);
+})
+
+/*  NIET ZEKER */
 

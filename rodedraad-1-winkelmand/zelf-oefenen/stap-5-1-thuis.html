@@ -35,10 +35,18 @@
 		const productList = document.getElementById("product-list");
 		productList.textContent = "";
 
-		cart.forEach(product =>{
+		cart.forEach((product, index) =>{ //index zegt dat je nu voor elk stuk waar je op iets staat moet uitvoeren
 			const totalPrice = parseInt(product.quantity) * parseFloat(product.price);
 			const listItem = document.createElement("li");
 			listItem.textContent = `${product.name} -> ${product.quantity} * € ${product.price} = € ${totalPrice.toFixed(2)}`;
+
+
+			/*Verwijder knop*/
+			const deleteButton = document.createElement("button");
+			deleteButton.innerText = "Delete";
+			deleteButton.className = "btn btn-danger btn-sm";
+			listItem.appendChild(deleteButton);
+
 			productList.appendChild(listItem);
 		});
 	}

@@ -1,11 +1,13 @@
 /*
-Maak een Tekstveld Leeg bij Klikken op een Knop
-– Oefening: Maak een invoerveld en een knop. Wanneer je op de knop klikt,
-    moet de tekst in het invoerveld worden gewist.*/
+Toon de Inhoud van een Tekstveld in een Paragraaf bij Klikken
+– Oefening: Voeg een invoerveld, een knop, en een lege paragraaf toe.
+    Wanneer je op de knop klikt, moet de tekst uit het invoerveld worden
+weergegeven in de paragraaf.*/
 
 const invoerveld = document.getElementById("invoerveld");
 const knop = document.getElementById("knop");
+const paragraaf = document.getElementById("legeParagraaf");
 
 knop.addEventListener("click", function (){
-    invoerveld.value = ""; // Leegmaken van het invoerveld
+    paragraaf.textContent = invoerveld.value; // de paragraaf text inhoud = invoerveld z'n inhoud (value)
 })

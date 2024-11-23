@@ -1,12 +1,7 @@
 /*
-Schrijf een functie telWoorden(zin) die het aantal woorden in een zin telt en
-het resultaat retourneert.
-– Console Test: console.log(telWoorden("Dit is een voorbeeldzin."));
-// Verwachte Output: 4
+Schrijf een functie genereerWachtwoord(lengte) die een willekeurig
+wachtwoord van een opgegeven lengte genereert. Het wachtwoord moet uit
+hoofdletters, kleine letters, cijfers en speciale tekens bestaan.
+– Console Test: console.log(genereerWachtwoord(8)); // Verwachte
+Output: Bijvoorbeeld "a8$B1xQ!"
 */
-
-function telWoorden(zin){
-    return zin.split(' ').length;
-}
-
-console.log(telWoorden("Dit is een voorbeeldzin."))

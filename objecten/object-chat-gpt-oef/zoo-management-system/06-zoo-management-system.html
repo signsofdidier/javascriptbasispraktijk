@@ -12,11 +12,13 @@
 
 <script>
 
-/*	Stap 5: Method Chaining
-	Pas method chaining toe in de Animal-class:
+/*	Stap 6: Eindopdracht
+	Combineer alles:
 
-	Zorg dat de methode celebrateBirthday() een verwijzing naar het object (this) retourneert.
-	Test method chaining door een verjaardag te vieren en daarna getDetails() aan te roepen.*/
+	Maak een lijst van dieren, waaronder zowel normale Animal-objecten als Carnivore-objecten.
+	Gebruik method chaining om de leeftijd van een paar dieren te verhogen.
+	Print de details van alle dieren met behulp van getDetails().
+	Gebruik de getter om de beschrijving van een dier op te halen en de setter om een dier een nieuwe naam te geven.*/
 
 class Animal{
 	constructor(name, species, age){
@@ -58,6 +60,22 @@ const animal = new Animal('Lolo', 'Olifant', 10);
 animal.celebrateBirthday().celebrateBirthday();
 console.log(animal.getDetails()); // Het dier Lolo is een Olifant en is 12 jaar oud.
 
+const zoo = [
+	new Animal('Lolo', 'Olifant', 10),
+	new Carnivore('Shere Khan', 'Tijger', 5, 'vlees'),
+	new Animal('Bubbles', 'Aap', 3),
+];
+
+zoo.forEach(animal => {
+	animal.celebrateBirthday();
+	console.log(animal.getDetails());
+});
+
+// Gebruik de getter en setter
+const tiger = zoo[1];
+console.log(tiger.description); // Shere Khan is een 6-jarige Tijger.
+tiger.rename = 'Simba';
+console.log(tiger.getDetails()); // Het dier Simba is een Tijger en is 6 jaar oud.
 
 </script>
 

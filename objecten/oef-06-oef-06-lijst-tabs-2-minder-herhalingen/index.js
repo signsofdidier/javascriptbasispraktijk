@@ -1,3 +1,16 @@
+// Class altijd bovenaan
+class Bestelling{
+    constructor(productnaam, klantnaam, status) {
+        this.productnaam = productnaam;
+        this.klantnaam = klantnaam;
+        this.status = status;
+    }
+
+    beschrijf(){
+        return `Productnaam: ${this.productnaam}, Klantnaam: ${this.klantnaam}, Status: ${this.status}`
+    }
+}
+
 
 document.getElementById("orderForm").addEventListener("submit", function(event){
     const productnaam = document.getElementById("productName").value;
@@ -8,6 +21,7 @@ document.getElementById("orderForm").addEventListener("submit", function(event){
     const nieuweBestelling = new Bestelling(productnaam, klantnaam, status);
 
     event.preventDefault();
+
     if (status === "In afwachting"){
         // haal de functie met daarin het id van de ul list en de bestelling constructor
         addOrderToList("pendingList", nieuweBestelling);
@@ -17,6 +31,7 @@ document.getElementById("orderForm").addEventListener("submit", function(event){
         addOrderToList("shippedList", nieuweBestelling);
     }
 
+    /* Toast rechts boven */
     const toastBody = document.getElementById("toastBody");
     /*toastBody.textContent = `Nieuwe bestelling van ${klantnaam}`*/
     toastBody.innerHTML = `<strong>${klantnaam}</strong> heeft een nieuwe bestelling toegevoegd`
@@ -35,17 +50,5 @@ function addOrderToList(listId, bestelling){
     list.appendChild(listItem);
 }
 
-// Class altijd onderaan
-class Bestelling{
-    constructor(productnaam, klantnaam, status) {
-        this.productnaam = productnaam;
-        this.klantnaam = klantnaam;
-        this.status = status;
-    }
-
-    beschrijf(){
-        return `Productnaam: ${this.productnaam}, Klantnaam: ${this.klantnaam}, Status: ${this.status}`
-    }
-}
 
 

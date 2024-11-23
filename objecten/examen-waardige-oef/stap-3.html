@@ -29,10 +29,20 @@
 		}
 	}
 
+	class Ebook extends Book{
+		constructor(title, author, price, fileSize) {
+			super(title, author, price);
+			this.fileSize = fileSize;
+		}
+
+		getInfo(){
+			return `Het boek '${this.title}' door ${this.author} (${this.fileSize}MB) kost €${this.price.toFixed(2)}.`;
+		}
+	}
+
 	// Test de class
-	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
-	book.applyDiscount(5);
-	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €14.99."
+	const ebook = new Ebook('De Hobbit', 'J.R.R. Tolkien', 14.99, 5);
+	console.log(ebook.getInfo());
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

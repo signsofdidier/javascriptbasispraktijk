@@ -91,10 +91,28 @@
 			<i class="bi bi-plus-circle"></i> Voeg Maaltijd Toe
 		</button>
 	</div>
+	<div class="row">
+		<div class="col-12">
+			<ul class="list-group list-group-flush" id="maaltijd-lijst"></ul>
+		</div>
+	</div>
 </div>
 
 <script>
-
+	// Functie om de toegevoegde maaltijden weer te geven in de lijst
+	function updateMaaltijdWeergave() {
+		const maaltijdLijst = document.getElementById('maaltijd-lijst');
+		// Maak de lijst leeg voordat we deze opnieuw opbouwen
+		maaltijdLijst.innerHTML = '';
+		// Loop door elke maaltijd in de array en voeg deze toe aan de lijst
+		maaltijden.forEach(maaltijd => {
+			const listItem = document.createElement('li');
+			listItem.className = `list-group-item d-flex justify-content-between align-items-center`;
+			// array maaltijd bevat naam, calorieën, koolhydraten enz. Zo haal je elk element eruit.
+			listItem.innerHTML = `<strong>${maaltijd[0]}</strong>: ${maaltijd[1]} kcal, ${maaltijd[2]}g KH, ${maaltijd[3]}g V, ${maaltijd[4]}g EW`;
+			maaltijdLijst.appendChild(listItem);
+		});
+	}
 
 	let dagelijkseCalorieBehoefte = 0;
 	document.getElementById("bereken-behoefte").addEventListener("click", function(){
@@ -138,8 +156,8 @@
 
 			// Werk de maaltijdlijst en totale waarden bij
 			updateMaaltijdWeergave();
-			updateTotaleWaarden();
-			checkCalorieOverschrijding();
+			/*updateTotaleWaarden();
+			checkCalorieOverschrijding();*/
 
 			// Maak de invoervelden leeg
 			document.getElementById('maaltijd-naam').value = '';

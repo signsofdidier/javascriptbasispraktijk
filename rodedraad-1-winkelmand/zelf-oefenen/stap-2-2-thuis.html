@@ -25,7 +25,14 @@
 		listItem.textContent = productName;
 		list.appendChild(listItem);
 
+		const productQuantity = document.getElementById("product-quantity").value;
+		const productPrice = document.getElementById("product-price").value;
+		console.log(productQuantity, productPrice);
+
+		// onderaan houden
 		document.getElementById("product-name").value = "";
+
+
 	});
 </script>
 <!-- Bootstrap JS -->

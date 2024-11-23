@@ -1,31 +1,13 @@
 /*
-Laat een Bericht Zien bij Focus en Blur op een Invoerveld
-– Oefening: Voeg focus en blur events toe aan een invoerveld. Log
-“Invoerveld gefocust” bij focus en “Invoerveld verlaten” bij blur.
-– Console Test:
-    • console.log("Invoerveld gefocust"); // Verwachte Output:
-Invoerveld gefocust
-• console.log("Invoerveld verlaten"); // Verwachte Output:
-Invoerveld verlaten
+Voer een Actie uit bij Scrollen
+– Oefening: Voeg een scroll event toe aan de pagina die in de console logt
+wanneer de gebruiker naar beneden scrolt. Toon het huidige scrollniveau.
+– Console Test: console.log("Scrollniveau: 150px"); // Verwachte
+Output: Scrollniveau: 150px
 */
 
-let inputveld = document.getElementById("inputveld");
 
-inputveld.addEventListener('focus', function (event){
-    console.log("Invoerveld gefocust");
+window.document.addEventListener('scroll', function(e){
+    console.log(`Scrollniveau ${window.scrollY}px`);
 })
 
-inputveld.addEventListener('blur', function (event){
-    console.log("Invoerveld verlaten");
-})
-
-
-/*
-Of KORTER
-
-let inputveld = document.getElementById("inputveld");
-
-inputveld.addEventListener('focus', () => console.log("Invoerveld gefocust"));
-inputveld.addEventListener('blur', () => console.log("Invoerveld verlaten"));
-
-*/

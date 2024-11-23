@@ -41,21 +41,28 @@
 		}
 	}
 
-	class Ebook extends Book{
+	class EBook extends Book{
 		constructor(title, author, price, fileSize) {
 			super(title, author, price);
 			this.fileSize = fileSize;
 		}
 
 		getInfo(){
-			return `Het boek '${this.title}' door ${this.author} (${this.fileSize}MB) kost €${this.price.toFixed(2)}.`;
+			return `Het e-boek '${this.title}' door ${this.author} (${this.fileSize}MB) kost €${this.price.toFixed(2)}.`;
 		}
 	}
 
-	// Test method chaining
-	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
-	book.applyDiscount(5).applyDiscount(2); // Pas twee kortingen toe
-	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €12.99."
+	// lijst
+	const library = [
+		new Book('De Hobbit', 'J.R.R. Tolkien', 19.99),
+		new EBook('1984', 'George Orwell', 9.99, 2),
+		new Book('De Da Vinci Code', 'Dan Brown', 14.99),
+	];
+
+	library.forEach((book) => {
+		book.applyDiscount(2); // Pas korting toe
+		console.log(book.getInfo());
+	});
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

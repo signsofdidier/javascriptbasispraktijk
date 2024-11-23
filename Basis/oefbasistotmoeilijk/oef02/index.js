@@ -1,10 +1,12 @@
 /*
-Schrijf een functie telOp(a, b) die twee getallen optelt en de som retourneert.
-– Console Test: console.log(telOp(5, 3)); // Verwachte Output: 8
+Schrijf een functie begroet(naam) die een naam als parameter neemt en “Hallo,
+    [naam]!” retourneert.
+– Console Test: console.log(begroet("Jan")); // Verwachte Output:
+"Hallo, Jan!"
 */
 
-function telOp(a,b){
-    return a + b;
+function begroet(naam){
+    return `Hallo ${naam}!`
 }
 
-console.log(telOp(5,3));
+console.log(begroet("Jan"));

@@ -20,23 +20,22 @@
 
 	const cart = [];
 
+	function updateCartDiplay(){
+		const productList = document.getElementById("product-list");
+		productList.textContent = "";
+
+		cart.forEach(product =>{
+			const totalPrice = parseInt(product.quantity) * parseFloat(product.price);
+			const listItem = document.createElement("li");
+			listItem.textContent = `${product.name} -> ${product.quantity} * € ${product.price} = € ${totalPrice.toFixed(2)}`;
+			productList.appendChild(listItem);
+		});
+	}
+
 	document.getElementById("add-product").addEventListener("click", function(){
 		const productName = document.getElementById("product-name").value;
 		const productQuantity = document.getElementById("product-quantity").value;
 		const productPrice = document.getElementById("product-price").value;
-
-		const totalPrice = parseInt(productQuantity) * parseFloat(productPrice);
-
-		const list = document.getElementById("product-list");
-		const listItem = document.createElement("li");
-
-		listItem.textContent = `${productName} -> ${productQuantity} * € ${productPrice} = € ${totalPrice.toFixed(2)}`;
-		list.appendChild(listItem);
-
-		// onderaan houden
-		document.getElementById("product-name").value = "";
-		document.getElementById("product-quantity").value = "";
-		document.getElementById("product-price").value = "";
 
 		/*Object*/
 		let product = {
@@ -47,7 +46,12 @@
 
 		cart.push(product);
 
-		console.log(cart);
+		updateCartDiplay();
+
+		// onderaan houden
+		document.getElementById("product-name").value = "";
+		document.getElementById("product-quantity").value = "";
+		document.getElementById("product-price").value = "";
 
 	});
 </script>

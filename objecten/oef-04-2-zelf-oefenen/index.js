@@ -1,58 +1,49 @@
-document.getElementById("autoForm").addEventListener("submit", function(event){
+class Voertuig{
+    constructor(model, bouwjaar, type) {
+        this.model = model;
+        this.bouwjaar = bouwjaar;
+        this.type = type;
+    }
+}
+
+class Auto extends Voertuig{
+    constructor(model, bouwjaar, type, versnelling, aandrijving) {
+        super(model, bouwjaar, type);
+        this.versnelling = versnelling;
+        this.aandrijving = aandrijving;
+    }
+
+    beschrijf(){
+        return `Model: ${this.model} - Bouwjaar: ${this.bouwjaar} - Type: ${this.type} - Versnelling: ${this.versnelling} - Aandrijving: ${this.aandrijving}`
+    }
+}
+
+
+const toevoegen = document.getElementById("autoForm");
+toevoegen.addEventListener("submit", function (event){
     event.preventDefault();
 
-    // Haal de waarden op uit het formulier met .value
     const model = document.getElementById("model").value;
     const bouwjaar = document.getElementById("bouwjaar").value;
     const type = document.getElementById("type").value;
     const versnelling = document.getElementById("versnelling").value;
     const aandrijving = document.getElementById("aandrijving").value;
 
-    // Maak een nieuwe auto aan
     const nieuweAuto = new Auto(model, bouwjaar, type, versnelling, aandrijving);
 
-    // Voeg de auto toe aan de lijst
     const autoList = document.getElementById("autoList");
-    const autoItem = document.createElement("li");
-    autoItem.classList.add("list-group-item");
-    autoItem.textContent = nieuweAuto.beschrijf();
-    autoList.appendChild(autoItem);
+    const listItem = document.createElement("li");
+    listItem.textContent = nieuweAuto.beschrijf();
+    listItem.classList.add("list-group-item", "text-unstyle", "d-flex", "justify-content-between", "align-items-center");
+    autoList.appendChild(listItem);
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+    deleteButton.textContent = "Delete";
+    listItem.appendChild(deleteButton);
+
+    deleteButton.addEventListener("click", function(){
+        listItem.remove();
+    });
+
+    document.getElementById("autoForm").reset();
 });
-
-// class
-class Voertuig {
-    constructor(model, bouwjaar){
-        this.model = model;
-        this.bouwjaar = bouwjaar;
-    }
-
-    // lege functies die mogelijks ooit kunnen gebruikt worden
-    rijden() {
-        return `${this.model} is aan het rijden.`;
-    }
-
-    starten() {
-        return `${this.model} is gestart.`;
-    }
-
-    stoppen() {
-        return `${this.model} is gestopt.`;
-    }
-}
-
-class Auto extends Voertuig {
-    // bij externs zet je de originele en de nieuwe bij constructor
-    constructor(model, bouwjaar, type, versnelling, aandrijving) {
-        super(model, bouwjaar); // hier enkel die dat al bestonden
-        this.type = type;
-        this.versnelling = versnelling;
-        this.aandrijving = aandrijving;
-    }
-
-    beschrijf(){
-        return `Model: ${this.model}, Bouwjaar: ${this.bouwjaar}, Type: ${this.type}, Versnelling: ${this.versnelling}, Aandrijving: ${this.aandrijving}`;
-    }
-}
-
-
-

@@ -3,38 +3,84 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Object examen waardige oef</title>
+	<title>Gitaar en bass collectie</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
 
+<div class="container">
+	<div class="row d-flex flex-column align-items-center justify-content-center vh-100">
+		<div class="col-12">
+			<h1 class="fs-3 mb-3">Gitaar en bass collectie</h1>
+			<div id="collectieList"></div>
+		</div>
+	</div>
+</div>
+
 <script>
 
-/*	Oefening 1: Maak een eenvoudige class
-	Maak een class genaamd Car met de volgende eigenschappen en methodes:
+	class Gitaar{
+		constructor(brand, pickups, strings, tuning){
+			this.brand = brand;
+			this.pickups = pickups;
+			this.strings = strings;
+			this.tuning = tuning;
+		}
 
-			Een constructor die de parameters brand, model en year aanneemt.
-			Een methode genaamd getDetails() die een string retourneert in de vorm:
-			"Deze auto is een [brand] [model] uit [year]."
-	Bonus: Maak een object van de class Car en roep getDetails() aan.*/
+		getDetails(){
+			return `De gitaar is een ${this.brand} gitaar met ${this.pickups} pickups, ${this.strings} snaren. De tuning staat momenteel in ${this.tuning}.`
+		}
 
-class Car {
-	constructor(brand, model, year) {
-		this.brand = brand;
-		this.model = model;
-		this.year = year;
+		get gitaarStaat() {
+			return this._gitaarStaat;
+		}
+
+		set gitaarStaat(staat) {
+			this._gitaarStaat = staat;
+		}
 	}
 
-	getDetails() {
-		return `Deze auto is een ${this.brand} ${this.model} uit ${this.year}.`;
-	}
-}
+	class GitaarAankoop extends Gitaar{
+		constructor(brand, pickups, strings, tuning, price) {
+			super(brand, pickups, strings, tuning);
+			this.price = price;
+		}
 
-// Test
-const myCar = new Car("Toyota", "Corolla", 2020);
-console.log(myCar.getDetails());
+		getDetails(){
+			return `${super.getDetails()} De kostprijs was circa €${this.price}.`
+		}
+	}
+
+	// array element scheiden met comma
+	const gitaarCollectie = [
+		new GitaarAankoop('Washburn', 'EMG', 6, 'drop B', 575),
+		new GitaarAankoop('Ibanez', 'Fishman-fluence', 6, 'drop C', 950),
+		new GitaarAankoop('Ormsby', 'DeLaCreme', 6, 'drop B', 1775),
+		new GitaarAankoop('Esp', 'BareKnuckle', 6, 'drop B', 1400),
+		new GitaarAankoop('Ibanez EHB 1005MS', 'bass', 5, 'standard', 1200),
+		new GitaarAankoop('Dingwall', 'standard Dingwall', 4, 'drop B', 1500),
+	]
+
+	gitaarCollectie[0].gitaarStaat = 'nieuw';
+	gitaarCollectie[1].gitaarStaat = 'nieuw';
+	gitaarCollectie[2].gitaarStaat = 'nieuw';
+	gitaarCollectie[3].gitaarStaat = 'nieuw';
+	gitaarCollectie[4].gitaarStaat = 'nieuw';
+	gitaarCollectie[5].gitaarStaat = 'tweedehands';
+
+	const collectieList = document.getElementById('collectieList');
+	const ul = document.createElement('ul');
+	ul.className = "list-group"; // Maak de UL horizontaal en wrap items als nodig
+	gitaarCollectie.forEach(gitaar => {
+		const li = document.createElement('li');
+		li.className = "list-group-item";
+		li.innerHTML = `Staat bij aankoop: ${gitaar.gitaarStaat} - ${gitaar.getDetails()}`;
+		ul.appendChild(li);
+	});
+	collectieList.appendChild(ul);
+
 
 </script>
 

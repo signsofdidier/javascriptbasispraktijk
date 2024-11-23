@@ -19,13 +19,20 @@
 		}
 
 		getInfo(){
-			return `Het boek '${this.title}' door ${this.author} kost €${this.price}.`;
+			return `Het boek '${this.title}' door ${this.author} kost €${this.price.toFixed(2)}.`;
+		}
+
+		// nieuwe methode voor het bereken van de discount.
+		// gebruik Math.max zodat de prijs niet onder 0 kan gaan.
+		applyDiscount(discount){
+			this.price = Math.max(0, this.price - discount);
 		}
 	}
 
 	// Test de class
 	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
-	console.log(book.getInfo());
+	book.applyDiscount(5);
+	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €14.99."
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

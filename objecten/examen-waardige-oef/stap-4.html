@@ -27,6 +27,16 @@
 		applyDiscount(discount){
 			this.price = Math.max(0, this.price - discount);
 		}
+
+		// retourneert de prijs als een string met het euroteken.
+		get formattedPrice(){
+			return `€${this.price.toFixed(2)}`
+		}
+
+		// stelt een nieuwe prijs in door een korting toe te passen
+		set discountedPrice(discount){
+			this.price = Math.max(0, this.price - discount);
+		}
 	}
 
 	class Ebook extends Book{
@@ -41,8 +51,10 @@
 	}
 
 	// Test de class
-	const ebook = new Ebook('De Hobbit', 'J.R.R. Tolkien', 14.99, 5);
-	console.log(ebook.getInfo());
+	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
+	console.log(book.formattedPrice); // "€19.99"
+	book.discountedPrice = 5; // Stel een korting van €5 in
+	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €14.99."
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

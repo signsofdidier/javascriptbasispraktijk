@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Object examen waardige oef</title>
+	<title>Muziekwinkel</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -11,21 +11,36 @@
 <body>
 
 <script>
-	class Book {
-		constructor(title, author, price){
-			this.title = title;
-			this.author = author;
-			this.price = price;
+	class Instrument{
+		constructor(naam, type, prijs){
+			this.naam = naam;
+			this.type = type;
+			this.prijs = prijs;
 		}
 
 		getInfo(){
-			return `Het boek '${this.title}' door ${this.author} kost €${this.price}.`;
+			return `De ${this.naam} is een ${this.type} en kost €${this.prijs.toFixed(2)}.`
+		}
+
+		applyDiscount(discount){
+			this.prijs = Math.max(0, this.prijs - discount);
+			return this; // method chaining -> Zorg dat methodes zoals applyDiscount een verwijzing naar het object (this)
+			// retourneren.
+		}
+
+		increasePriceByPercentage(percentage){
+			this.prijs = this.prijs + this.prijs * percentage / 100;
+			return this;
 		}
 	}
 
-	// Test de class
-	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
-	console.log(book.getInfo());
+	const guitar = new Instrument('Gitaar', 'Snaarinstrument', 199.99);
+	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €199.99."
+	guitar.applyDiscount(50);
+	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €149.99."
+	guitar.increasePriceByPercentage(10);
+	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €164.99."
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

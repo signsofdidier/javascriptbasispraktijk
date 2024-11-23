@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Object examen waardige oef</title>
+	<title>Muziekwinkel</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -34,12 +34,20 @@
 		}
 	}
 
-	const guitar = new Instrument('Gitaar', 'Snaarinstrument', 199.99);
-	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €199.99."
-	guitar.applyDiscount(50);
-	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €149.99."
-	guitar.increasePriceByPercentage(10);
-	console.log(guitar.getInfo()); // Verwacht: "De Gitaar is een Snaarinstrument en kost €164.99."
+	class ElectricInstrument extends Instrument{
+		constructor(naam, type, prijs, stroomverbruik) {
+			super(naam, type, prijs);
+			this.stroomverbruik = stroomverbruik;
+		}
+
+		getInfo(){
+			return `De ${this.naam} is een ${this.type}, kost €${this.prijs.toFixed(2)}, en verbruikt ${this.stroomverbruik} watt.`
+		}
+	}
+
+	// Test de subclass
+	const electricGuitar = new ElectricInstrument('Gitaar', 'Snaarinstrument', 299.99, 50);
+	console.log(electricGuitar.getInfo()); // Verwacht: "De elektrische Gitaar is een Snaarinstrument, kost €299.99, en verbruikt 50 watt."
 
 </script>
 

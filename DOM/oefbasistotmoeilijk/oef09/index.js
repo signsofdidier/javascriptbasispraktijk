@@ -1,21 +1,13 @@
 /*
-Maak een Toggle-knop voor Tekstweergave
-– Oefening: Voeg een paragraaf met tekst en een knop toe. Wanneer je op de
-knop klikt, moet de paragraaf worden verborgen of weergegeven, afhankelijk
-van de huidige zichtbaarheid.*/
-
+Verander de Tekstkleur van een Paragraaf op basis van Invoer
+– Oefening: Maak een invoerveld voor een kleur en een knop. Wanneer je op
+de knop klikt, moet de tekstkleur van een paragraaf veranderen naar de
+opgegeven kleur in het invoerveld.*/
 
 const knop = document.getElementById("knop");
-const paragraaf = document.getElementById("paragraaf");
+const invoerveld = document.getElementById("invoerveld");
+const paragraaf = document.getElementById("paragraaf")
 
 knop.addEventListener("click", function (){
-   if (paragraaf.classList.contains("d-none")){
-       paragraaf.classList.remove("d-none");
-   }else {
-       paragraaf.classList.add("d-none");
-   }
-});
-
-
-
-// .contains("d-none") ipv .add of .remove // .contains() kijkt of het element al een class heeft van d-none
+    paragraaf.style.color = invoerveld.value;
+})

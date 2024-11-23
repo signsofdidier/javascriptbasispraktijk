@@ -1,13 +1,19 @@
 /*
-Voer een Actie uit bij Scrollen
-– Oefening: Voeg een scroll event toe aan de pagina die in de console logt
-wanneer de gebruiker naar beneden scrolt. Toon het huidige scrollniveau.
-– Console Test: console.log("Scrollniveau: 150px"); // Verwachte
-Output: Scrollniveau: 150px
+Tel het Aantal Keer dat op een Knop is Geklikt
+– Oefening: Voeg een click event toe aan een knop die bijhoudt hoe vaak erop
+is geklikt en dit aantal in de console logt.
+– Console Test:
+    • console.log("Knop geklikt: 1 keer"); // Verwachte Output:
+Knop geklikt: 1 keer
+• console.log("Knop geklikt: 2 keer"); // Verwachte Output:
+Knop geklikt: 2 keer
 */
 
+let knop = document.getElementById("telKnop");
+let klikTeller = 0;
 
-window.document.addEventListener('scroll', function(e){
-    console.log(`Scrollniveau ${window.scrollY}px`);
-})
+knop.addEventListener('click', function (e){
+    klikTeller++;
+    console.log(`Knop geklikt: ${klikTeller} keer`);
+});
 

@@ -54,6 +54,9 @@
                     axios.get(detailsURL)
                         .then(detailsResponse => {
                             const details = detailsResponse.data.drinks[0]; // Eerste (en enige) item
+                            const tagsHTML = details.strTags
+                                ? details.strTags.split(",").map(tag => `<button type="button" class="btn btn-warning btn-sm me-2">${tag}</button>`).join('')
+                                : '<span>Geen tags beschikbaar</span>';
 
                             // Dynamisch de HTML genereren
                             outputHTML += `
@@ -72,27 +75,43 @@
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="modal-${details.idDrink}" tabindex="-1" aria-labelledby="modalLabel-${details.idDrink}" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="modalLabel-${details.idDrink}">${details.strDrink}</h1>
+                                                <h1 class="modal-title fs-5" id="modalLabel-${details.idDrink}">Cocktail recept</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <img src="${details.strDrinkThumb}" class="img-fluid mb-3" alt="${details.strDrink}">
-                                                <p><strong>Alcoholisch:</strong> ${details.strAlcoholic}</p>
-                                                <p><strong>Glas:</strong> ${details.strGlass}</p>
-                                                <p><strong>Instructies:</strong> ${details.strInstructions}</p>
-                                                <p><strong>Ingrediënten:</strong></p>
-                                                <ul>
-                                                    ${[1, 2, 3, 4, 5, 6].map(i => {
-                                const ingredient = details[`strIngredient${i}`];
-                                const measure = details[`strMeasure${i}`];
-                                return ingredient
-                                    ? `<li>${measure ? measure : ''} ${ingredient}</li>`
-                                    : '';
-                            }).join('')}
-                                                </ul>
+                                            <div class="modal-body row row-cols-1 row-cols-md-3">
+                                                <div class="col-md-4">
+                                                    <img src="${details.strDrinkThumb}" class="img-fluid" alt="${details.strDrink}">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h2 class="fs-3">${details.strDrink}</h2>
+                                                    <p><strong>Categorie:</strong> ${details.strCategory}</p>
+                                                    <p><strong>Alcoholisch:</strong> ${details.strAlcoholic}</p>
+                                                    <p><strong>Ingrediënten:</strong></p>
+                                                    <ul class="d-flex ">
+                                                        <div>
+                                                        ${[1, 2, 3, 4, 5, 6].splice(0,3).map(i => {
+                                                            const ingredient = details[`strIngredient${i}`];
+                                                            const measure = details[`strMeasure${i}`];
+                                                            return ingredient ? `<li>${measure ? measure : ''} ${ingredient}</li>` : '';
+                                                        }).join('')}
+                                                        </div>
+                                                        <div class="ms-5">
+                                                            ${[1, 2, 3, 4, 5, 6].splice(3,6).map(i => {
+                                                                const ingredient = details[`strIngredient${i}`];
+                                                                const measure = details[`strMeasure${i}`];
+                                                                return ingredient ? `<li>${measure ? measure : ''} ${ingredient}</li>` : '';
+                                                            }).join('')}
+                                                        </div>
+                                                    </ul>
+                                                    <p><strong>Instructies:</strong> ${details.strInstructions}</p>
+                                                    <p><strong>Tags:</strong> ${tagsHTML}</p>
+
+
+                                                     </div>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,7 +120,7 @@
                                     </div>
                                 </div>
                             `;
-
+                            console.log(details.strTags);
                             // Voeg de kaarten toe aan de container
                             document.getElementById("cocktail-lijst").innerHTML = outputHTML;
                         })

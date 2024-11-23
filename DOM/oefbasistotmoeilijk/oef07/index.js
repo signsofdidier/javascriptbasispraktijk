@@ -1,10 +1,15 @@
 /*
-Verander de Tekst van een Knop na Klikken
-– Oefening: Voeg een knop toe. Wanneer je op de knop klikt, moet de tekst van
-de knop veranderen naar “Geklikt!”.*/
+Tel het Aantal Keer dat op een Knop is Geklikt
+– Oefening: Voeg een knop en een paragraaf toe. Wanneer je op de knop klikt,
+    moet het aantal keren dat erop is geklikt worden weergegeven in de
+paragraaf.
+*/
 
 const knop = document.getElementById("knop");
+const paragraaf = document.getElementById("paragraaf");
+let aantalKlikken = 0;
 
 knop.addEventListener("click", function (){
-    knop.textContent = "Geklikt!";
+    aantalKlikken++
+    paragraaf.textContent = aantalKlikken;
 });

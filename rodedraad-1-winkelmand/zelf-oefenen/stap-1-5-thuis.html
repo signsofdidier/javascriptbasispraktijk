@@ -17,7 +17,11 @@
 <script>
 	document.getElementById("add-product").addEventListener("click", function(){
 		const productName = document.getElementById("product-name").value;
-		console.log(productName);
+
+		const list = document.getElementById("product-list");
+		const listItem = document.createElement("li");
+		listItem.textContent = productName;
+		list.appendChild(listItem);
 	});
 </script>
 <!-- Bootstrap JS -->

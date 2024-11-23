@@ -13,45 +13,27 @@
 <script>
 
 /*
-	Oefening 3: Class met inheritance
-	Maak een class Animal met de volgende eigenschappen:
+	Oefening 4: Static methodes
+	Maak een class MathUtils met:
 
-			Een constructor die een parameter name aanneemt.
-			Een methode speak() die "Het dier maakt een geluid" retourneert.
-			Maak vervolgens een subclass Dog die de class Animal uitbreidt:
-
-			Voeg een extra parameter breed toe in de constructor.
-			Overschrijf de methode speak() zodat het "De hond blaft" retourneert.
-			Bonus: Maak objecten van beide classes en roep speak() aan.
+			Een static methode add(a, b) die de som van twee getallen retourneert.
+			Een static methode multiply(a, b) die het product van twee getallen retourneert.
+			Probeer deze static methodes aan te roepen zonder een object te maken.
 */
 
-class Animal {
-	constructor(name) {
-		this.name = name;
+class MathUtils {
+	static add(a, b) {
+		return a + b;
 	}
 
-	speak() {
-		return "Het dier maakt een geluid.";
-	}
-}
-
-class Dog extends Animal {
-	constructor(name, breed) {
-		super(name);
-		this.breed = breed;
-	}
-
-	speak() {
-		return "De hond blaft.";
+	static multiply(a, b) {
+		return a * b;
 	}
 }
 
 // Test
-const genericAnimal = new Animal("Dier");
-console.log(genericAnimal.speak());
-
-const myDog = new Dog("Max", "Golden Retriever");
-console.log(myDog.speak());
+console.log(MathUtils.add(3, 7)); // Output: 10
+console.log(MathUtils.multiply(4, 5)); // Output: 20
 
 
 </script>

@@ -1,74 +1,61 @@
-// voor 2015 zie oef01
-// let Auto = {
-//
-// }*/
-
-//es6 2005
-class Persoon{
-    constructor(naam,voornaam,leeftijd,geboortedatum){
-        this.naam = naam;
-        this.voornaam = voornaam;
-        this._leeftijd = leeftijd;
-        this.geboortedatum = geboortedatum;
+// Klasse Voertuig
+class Voertuig {
+    constructor(model, bouwjaar) {
+        this.model = model;
+        this.bouwjaar = bouwjaar;
     }
 
-    //getters en setters
-
-    // neem variable leeftijd
-    get leeftijd(){
-        return this._leeftijd;
-    }
-    // check met if statement als leeftijd groter is dan 0
-    set leeftijd(eenLeeftijd){
-        if (eenLeeftijd > 0){
-            this._leeftijd = eenLeeftijd; // omdat leeftijd groter is dan 0 mag de leeftijd effectief de leeftijd invoeren
-        }else{
-            console.log("LEeftijd moet een positief getal zijn");
-        }
+    rijden() {
+        return `${this.model} is aan het rijden.`;
     }
 
+    starten() {
+        return `${this.model} is gestart.`;
+    }
 
-    //functie (method)
-    beschrijf(){
-        return `${this.naam} - ${this.voornaam} - ${this._leeftijd} - ${this.geboortedatum}`;
+    stoppen() {
+        return `${this.model} is gestopt.`;
     }
 }
 
-// De class start ALTIJD met een HOOFDLETTER
-class Student extends Persoon{ // breidt uit op vorige class
-    constructor(naam, voornaam, leeftijd, geboortedatum, studentNummer){
-        super(naam, voornaam, leeftijd, geboortedatum) // oproepen van cunstructor van Persoon
-        this.studentNummer = studentNummer;
+// Klasse Auto die overerft van Voertuig
+class Auto extends Voertuig {
+    constructor(model, bouwjaar, type, versnelling, aandrijving) {
+        super(model, bouwjaar);
+        this.type = type;
+        this.versnelling = versnelling;
+        this.aandrijving = aandrijving;
     }
-    beschrijf(){
-        return `${super.beschrijf()} - ${this.studentNummer}`
+
+    beschrijf() {
+        return `Model: ${this.model}, Bouwjaar: ${this.bouwjaar}, Type: ${this.type}, Versnelling: ${this.versnelling}, Aandrijving: ${this.aandrijving}`;
     }
 }
 
-//BEGIN PROGRAMMA
-// 1 instantie van het object Persoon
 
-let aantalPersonen = parseInt(prompt("Hoeveel personen wens je in te geven?"));
-let personen = [];
+// Event listener voor het formulier
+document.getElementById("autoForm").addEventListener("submit", function (event) {
+    event.preventDefault();//tegenhouden van de pagina refresh
 
-for (let i = 0; i < aantalPersonen ; i++){
-    let naam = prompt(`Geef de naam van persoon ${i+1}`); // i + 1 is omdat persoon0 persoon1 moet worden bij een vraag.
-    let voornaam = prompt(`Geef de voornaam van persoon ${i+1}`);
-    let leeftijd = prompt(`Geef de leeftijd van persoon ${i+1}`);
-    let geboortedatum = prompt(`Geef de geboortedatum van persoon ${i+1}`);
+    // Haal de waarden op uit het formulier
+    const model = document.getElementById("model").value;
+    const bouwjaar = document.getElementById("bouwjaar").value;
+    const type = document.getElementById("type").value;
+    const versnelling = document.getElementById("versnelling").value;
+    const aandrijving = document.getElementById("aandrijving").value;
 
-    let persoon = new Persoon(naam, voornaam, leeftijd,geboortedatum); // gaat de blauwdruk gebruiken (constructor)
-    personen.push(persoon); // zet de gegevens van push onder elkaar in de array
-}
+    // Maak een nieuwe auto aan
+    const nieuweAuto = new Auto(model, bouwjaar, type, versnelling, aandrijving);
 
-/*console.log(personen);*/
+    // Voeg de auto toe aan de lijst
+    const autoList = document.getElementById("autoList");
+    const autoItem = document.createElement("li");
+    autoItem.classList.add("list-group-item");
+    autoItem.textContent = nieuweAuto.beschrijf();
+    autoList.appendChild(autoItem);
 
-console.log("Beschrijving van de ingegeven persoon");
-
-personen.forEach((persoon, index)=>{
-    console.log(`Persoon ${index + 1}: ${persoon.beschrijf()}`); // index + 1 = persoon1 ipv 0
+    // Formulier resetten na toevoegen
+    document.getElementById("autoForm").reset();
 });
 
-nieuweStudent = new Student("Vanassche", "Didier", "33", "1991-07-30", "1")
 
-console.log(nieuweStudent.beschrijf());

@@ -12,17 +12,17 @@
 
 <script>
 
-/*	Stap 3: Overerving
-	Maak een subclass Carnivore die erft van Animal en een extra eigenschap en methode toevoegt:
+/*	Stap 4: Getters en Setters
+	Voeg aan de Animal-class het volgende toe:
 
-	Eigenschap:
+	Getter:
 
-	favoriteFood (favoriet voedsel, bijvoorbeeld "vlees" of "vis")
-	Nieuwe Methode:
+	description: retourneert een string zoals:
+	"Lolo is een 10-jarige Olifant."
+	Setter:
 
-	hunt(): retourneert een string zoals:
-	"De Tijger jaagt op vlees."
-	Maak een Carnivore-object en test de methode.*/
+	rename: stelt een nieuwe naam in voor het dier.
+	Test de getters en setters.*/
 
 class Animal{
 	constructor(name, species, age){
@@ -38,6 +38,14 @@ class Animal{
 	celebrateBirthday(){
 		this.age += 1;
 	}
+
+	get description() {
+		return `${this.name} is een ${this.age}-jarige ${this.species}.`;
+	}
+
+	set rename(newName) {
+		this.name = newName;
+	}
 }
 
 class Carnivore extends Animal{
@@ -51,12 +59,10 @@ class Carnivore extends Animal{
 	}
 }
 
-newAnimal = new Animal('Lolo', 'olifant', 10);
-tijger = new Carnivore('tijgertje', 'tijger', 5, 'vlees');
-newAnimal.celebrateBirthday();
-
-console.log(newAnimal.getDetails()); // Het dier Lolo is een Olifant en is 11 jaar oud.
-console.log(tijger.hunt());
+const animal = new Animal('Lolo', 'Olifant', 10);
+console.log(animal.description); // Lolo is een 10-jarige Olifant.
+animal.rename = 'Baba';
+console.log(animal.getDetails()); // Het dier Baba is een Olifant en is 10 jaar oud.
 
 </script>
 

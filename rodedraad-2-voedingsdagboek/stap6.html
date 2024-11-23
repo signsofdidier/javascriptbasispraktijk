@@ -94,6 +94,8 @@
 </div>
 
 <script>
+
+
 	let dagelijkseCalorieBehoefte = 0;
 	document.getElementById("bereken-behoefte").addEventListener("click", function(){
 		// als input [name = geslacht ] is checked (?) voer dan .value uit
@@ -117,6 +119,37 @@
 			alert("Vul alle persoonlijke gegevens in om de caloriebehoefte te berekenen");
 		}
 	});
+
+	// Declaratie van een array om maaltijden op te slaan
+	let maaltijden = [];
+	// Event listener voor de "Voeg Maaltijd Toe" knop
+	document.getElementById('voeg-maaltijd-toe').addEventListener('click', function() {
+		// Haal de maaltijdinformatie op uit de invoervelden
+		const naam = document.getElementById('maaltijd-naam').value;
+		const calorieën = parseInt(document.getElementById('calorieën').value) || 0;
+		const koolhydraten = parseInt(document.getElementById('koolhydraten').value) || 0;
+		const vetten = parseInt(document.getElementById('vetten').value) || 0;
+		const eiwitten = parseInt(document.getElementById('eiwitten').value) || 0;
+
+		// Controleer of de maaltijdnaam is ingevuld
+		if (naam) {
+			// Voeg de maaltijd toe aan de array maaltijden
+			maaltijden.push([naam, calorieën, koolhydraten, vetten, eiwitten]);
+
+			// Werk de maaltijdlijst en totale waarden bij
+			updateMaaltijdWeergave();
+			updateTotaleWaarden();
+			checkCalorieOverschrijding();
+
+			// Maak de invoervelden leeg
+			document.getElementById('maaltijd-naam').value = '';
+			document.getElementById('calorieën').value = '';
+			document.getElementById('koolhydraten').value = '';
+			document.getElementById('vetten').value = '';
+			document.getElementById('eiwitten').value = '';
+		}
+	});
+
 
 
 </script>

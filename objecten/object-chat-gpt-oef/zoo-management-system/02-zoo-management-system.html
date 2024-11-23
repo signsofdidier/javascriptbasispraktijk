@@ -12,19 +12,12 @@
 
 <script>
 
-/*	Stap 1: Basisclass met properties
-	Maak een class genaamd Animal met de volgende eigenschappen en methodes:
+/*	Stap 2: Methodes toevoegen
+	Breid de Animal-class uit met een methode:
 
-	Eigenschappen:
-
-	name (naam van het dier)
-	species (diersoort)
-	age (leeftijd in jaren)
-	Methode:
-
-	getDetails(): retourneert een string zoals:
-	"Het dier Lolo is een Olifant en is 10 jaar oud."
-	Test je class door een Animal-object te maken en de methode aan te roepen.*/
+	Nieuwe Methode:
+	celebrateBirthday(): verhoogt de leeftijd van het dier met 1.
+	Test deze methode.*/
 
 class Animal{
 	constructor(name, species, age){
@@ -36,11 +29,16 @@ class Animal{
 	getDetails(){
 		return `Het dier ${this.name} is een ${this.species} en is ${this.age} jaar oud.`
 	}
+
+	celebrateBirthday(){
+		this.age += 1;
+	}
 }
 
 newAnimal = new Animal('Lolo', 'olifant', 10);
+newAnimal.celebrateBirthday();
 
-console.log(newAnimal.getDetails());
+console.log(newAnimal.getDetails()); // Het dier Lolo is een Olifant en is 11 jaar oud.
 
 </script>
 

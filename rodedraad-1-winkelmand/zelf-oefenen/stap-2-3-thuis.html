@@ -17,19 +17,26 @@
 <ul id="product-list"></ul>
 
 <script>
+
 	document.getElementById("add-product").addEventListener("click", function(){
 		const productName = document.getElementById("product-name").value;
+		const productQuantity = document.getElementById("product-quantity").value;
+		const productPrice = document.getElementById("product-price").value;
+
+		const totalPrice = parseInt(productQuantity) * parseFloat(productPrice);
 
 		const list = document.getElementById("product-list");
 		const listItem = document.createElement("li");
-		listItem.textContent = productName;
+
+		listItem.textContent = `${productName} -> ${productQuantity} * € ${productPrice} = € ${totalPrice.toFixed(2)}`;
 		list.appendChild(listItem);
 
+		// onderaan houden
 		document.getElementById("product-name").value = "";
+		document.getElementById("product-quantity").value = "";
+		document.getElementById("product-price").value = "";
 
-		const productQuantity = document.getElementById("product-quantity").value;
-		const productPrice = document.getElementById("product-price").value;
-		console.log(productQuantity, productPrice);
+
 	});
 </script>
 <!-- Bootstrap JS -->

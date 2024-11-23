@@ -1,12 +1,11 @@
 /*
-Verander de Achtergrondkleur van een div bij Klikken
-– Oefening: Voeg een div toe met een knop. Wanneer je op de knop klikt, moet
-de achtergrondkleur van de div veranderen naar lightblue.*/
+Maak een Tekstveld Leeg bij Klikken op een Knop
+– Oefening: Maak een invoerveld en een knop. Wanneer je op de knop klikt,
+    moet de tekst in het invoerveld worden gewist.*/
 
+const invoerveld = document.getElementById("invoerveld");
+const knop = document.getElementById("knop");
 
-let veranderKleur = document.getElementById("veranderKleur");
-let knop = document.getElementById("knop");
-
-veranderKleur.addEventListener("click", function (e){
-    knop.style.backgroundColor = "lightblue";
-});
+knop.addEventListener("click", function (){
+    paragraaf.textContent = invoerveld.value;
+})

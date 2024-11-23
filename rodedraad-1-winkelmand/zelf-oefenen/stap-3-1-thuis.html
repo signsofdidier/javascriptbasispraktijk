@@ -18,6 +18,8 @@
 
 <script>
 
+	const cart = [];
+
 	document.getElementById("add-product").addEventListener("click", function(){
 		const productName = document.getElementById("product-name").value;
 		const productQuantity = document.getElementById("product-quantity").value;
@@ -36,6 +38,16 @@
 		document.getElementById("product-quantity").value = "";
 		document.getElementById("product-price").value = "";
 
+		/*Object*/
+		let product = {
+			name : productName,
+			quantity : productQuantity,
+			price : productPrice
+		}
+
+		cart.push(product);
+
+		console.log(cart);
 
 	});
 </script>

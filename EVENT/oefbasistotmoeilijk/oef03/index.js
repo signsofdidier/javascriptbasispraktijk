@@ -1,16 +1,12 @@
 /*
-Verander de Achtergrondkleur met een Double-click Event
-– Oefening: Voeg een double-click event toe aan een div die de
-achtergrondkleur verandert naar lightblue en in de console
-“Achtergrondkleur veranderd!” logt.
-– Console Test: console.log("Achtergrondkleur veranderd!"); //
-Verwachte Output: Achtergrondkleur veranderd!
-*/
+Toon een Bericht bij Mouseover
+– Oefening: Voeg een mouseover event toe aan een tekst die “Je beweegt over
+de tekst!” in de console logt.
+– Console Test: console.log("Je beweegt over de tekst!"); //
+Verwachte Output: Je beweegt over de tekst!*/
 
+let tekstHover = document.querySelector("#tekst");
 
-const kleurVeranderen = document.getElementById("klikDiv");
-
-kleurVeranderen.addEventListener('dblclick', function(event){
-    document.body.style.backgroundColor="lightblue";
-    console.log("Achtergrondkleur veranderd!");
-})
+tekstHover.addEventListener('mouseover', function (event){
+    console.log("Je beweegt over de tekst!")
+});

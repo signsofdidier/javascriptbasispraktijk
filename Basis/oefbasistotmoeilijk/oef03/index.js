@@ -1,12 +1,11 @@
 /*
-Schrijf een functie begroet(naam) die een naam als parameter neemt en “Hallo,
-    [naam]!” retourneert.
-– Console Test: console.log(begroet("Jan")); // Verwachte Output:
-"Hallo, Jan!"
+Schrijf een functie vierkant(getal) die een getal kwadrateert en het resultaat
+retourneert.
+– Console Test: console.log(vierkant(4)); // Verwachte Output: 16
 */
 
-function begroet(naam){
-    return `Hallo ${naam}!`
+function vierkant(getal){
+    return getal * getal;
 }
 
-console.log(begroet("Jan"));
+console.log(vierkant(4));

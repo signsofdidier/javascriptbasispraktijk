@@ -31,7 +31,7 @@
                 pokemonList.forEach(poke => {
                     axios.get(poke.url) // Tweede API-aanroep: details van elke Pokémon
                         .then(pokemonDetail => {
-                            console.log(pokemonDetail.data);
+                           /* console.log(pokemonDetail.data);*/
                             const details = pokemonDetail.data;
 
                             // Kaarten dynamisch genereren
@@ -50,11 +50,46 @@
                                             <p class="card-text">
                                                 <strong>Gewicht:</strong> ${details.weight}
                                             </p>
-                                            <button type="button" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${details.name}">
                                                 <i class="bi bi-info-circle"></i> Meer info
                                             </button>
                                         </div>
                                     </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="${details.name}" tabindex="-1" aria-labelledby="pokemonMeerInfoModal" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title text-capitalize fs-5" id="pokemonMeerInfoModal">${details.name}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <img src="${details.sprites.front_default}" class="card-img-top" alt="${details.name}">
+                                        <p class="card-text">
+                                                <strong>Type:</strong> ${details.types.map(type => type.type.name).join(", ")}
+                                            </p>
+                                            <p class="card-text">
+                                                <strong>Hoogte:</strong> ${details.height}
+                                            </p>
+                                            <p class="card-text">
+                                                <strong>Gewicht:</strong> ${details.weight}
+                                            </p>
+                                            <p class="card-text">
+                                                <!--moves is een array en geen object dus heb je map nodig, slice neemt de eerste 3 moves uit de rij-->
+                                                <strong>Moves:</strong> ${details.moves.slice(0,3).map(move => move.move.name).join(", ")}
+                                            </p>
+                                            <p class="card-text">
+                                                <strong>Stats:</strong> ${details.stats.map(stat => stat.stat.name).join(", ")}
+                                            </p>
+
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                             `;
 

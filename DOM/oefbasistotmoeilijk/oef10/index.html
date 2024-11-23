@@ -11,10 +11,24 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-12 d-flex flex-column justify-content-center align-items-center vh-100">
-			<input type="text" id="invoerveld" class="form-control">
-			<button id="knop" class="btn btn-primary mt-3">Verander kleur</button>
-			<p id="paragraaf" class="mt-3">Noem een kleur en klik op de knop</p>
+		<div id="rekenmachine" class="col-12 d-flex flex-column justify-content-center align-items-center vh-100">
+			<h1 class="fs-3 mb-5">Rekensommen à la carte!</h1>
+			<div>
+				<input type="text" id="invoerveld1" class="form-control" placeholder="Geef het eerste getal in">
+				<input type="text" id="invoerveld2" class="form-control my-3" placeholder="Geef het tweede getal in">
+			</div>
+			<div>
+				<button id="optellen" class="btn btn-primary mt-3">optellen</button>
+				<button id="aftrekken" class="btn btn-primary mt-3">aftrekken</button>
+				<button id="vermenigvuldigen" class="btn btn-primary mt-3">vermenigvuldigen</button>
+				<button id="delen" class="btn btn-primary mt-3">delen</button>
+			</div>
+			<div id="rekenmachineResultaat">
+				<p id="resultParagraaf">0</p>
+			</div>
+			<button id="wissen" class="btn btn-secondary border border-0 mt-3">Wissen</button>
+
+
 		</div>
 	</div>
 </div>

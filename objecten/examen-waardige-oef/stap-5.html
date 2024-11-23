@@ -26,6 +26,8 @@
 		// gebruik Math.max zodat de prijs niet onder 0 kan gaan.
 		applyDiscount(discount){
 			this.price = Math.max(0, this.price - discount);
+			return this // method chaining -> Zorg dat methodes zoals applyDiscount een verwijzing naar het object (this)
+			// retourneren.
 		}
 
 		// retourneert de prijs als een string met het euroteken.
@@ -50,11 +52,10 @@
 		}
 	}
 
-	// Test de class
+	// Test method chaining
 	const book = new Book('De Hobbit', 'J.R.R. Tolkien', 19.99);
-	console.log(book.formattedPrice); // "€19.99"
-	book.discountedPrice = 5; // Stel een korting van €5 in
-	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €14.99."
+	book.applyDiscount(5).applyDiscount(2); // Pas twee kortingen toe
+	console.log(book.getInfo()); // "Het boek 'De Hobbit' door J.R.R. Tolkien kost €12.99."
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

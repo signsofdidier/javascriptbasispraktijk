@@ -1,3 +1,15 @@
+// Class altijd bovenaan
+class Bestelling{
+    constructor(productnaam, klantnaam, status) {
+        this.productnaam = productnaam;
+        this.klantnaam = klantnaam;
+        this.status = status;
+    }
+
+    beschrijf(){
+        return `Productnaam: ${this.productnaam}, Klantnaam: ${this.klantnaam}, Status: ${this.status}`
+    }
+}
 
 document.getElementById("orderForm").addEventListener("submit", function(event){
     const productnaam = document.getElementById("productName").value;
@@ -37,17 +49,6 @@ document.getElementById("orderForm").addEventListener("submit", function(event){
     document.getElementById("orderForm").reset();
 })
 
-// Class altijd onderaan
-class Bestelling{
-    constructor(productnaam, klantnaam, status) {
-        this.productnaam = productnaam;
-        this.klantnaam = klantnaam;
-        this.status = status;
-    }
 
-    beschrijf(){
-        return `Productnaam: ${this.productnaam}, Klantnaam: ${this.klantnaam}, Status: ${this.status}`
-    }
-}
 
 

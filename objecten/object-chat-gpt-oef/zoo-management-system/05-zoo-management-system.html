@@ -12,17 +12,11 @@
 
 <script>
 
-/*	Stap 4: Getters en Setters
-	Voeg aan de Animal-class het volgende toe:
+/*	Stap 5: Method Chaining
+	Pas method chaining toe in de Animal-class:
 
-	Getter:
-
-	description: retourneert een string zoals:
-	"Lolo is een 10-jarige Olifant."
-	Setter:
-
-	rename: stelt een nieuwe naam in voor het dier.
-	Test de getters en setters.*/
+	Zorg dat de methode celebrateBirthday() een verwijzing naar het object (this) retourneert.
+	Test method chaining door een verjaardag te vieren en daarna getDetails() aan te roepen.*/
 
 class Animal{
 	constructor(name, species, age){
@@ -37,6 +31,7 @@ class Animal{
 
 	celebrateBirthday(){
 		this.age += 1;
+		return this;
 	}
 
 	get description() {
@@ -60,9 +55,9 @@ class Carnivore extends Animal{
 }
 
 const animal = new Animal('Lolo', 'Olifant', 10);
-console.log(animal.description); // Lolo is een 10-jarige Olifant.
-animal.rename = 'Baba';
-console.log(animal.getDetails()); // Het dier Baba is een Olifant en is 10 jaar oud.
+animal.celebrateBirthday().celebrateBirthday();
+console.log(animal.getDetails()); // Het dier Lolo is een Olifant en is 12 jaar oud.
+
 
 </script>
 

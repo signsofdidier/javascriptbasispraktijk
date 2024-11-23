@@ -12,6 +12,30 @@
 
 <script>
 
+/*	Oefening 1: Maak een eenvoudige class
+	Maak een class genaamd Car met de volgende eigenschappen en methodes:
+
+			Een constructor die de parameters brand, model en year aanneemt.
+			Een methode genaamd getDetails() die een string retourneert in de vorm:
+			"Deze auto is een [brand] [model] uit [year]."
+	Bonus: Maak een object van de class Car en roep getDetails() aan.*/
+
+class Car {
+	constructor(brand, model, year) {
+		this.brand = brand;
+		this.model = model;
+		this.year = year;
+	}
+
+	getDetails() {
+		return `Deze auto is een ${this.brand} ${this.model} uit ${this.year}.`;
+	}
+}
+
+// Test
+const myCar = new Car("Toyota", "Corolla", 2020);
+console.log(myCar.getDetails());
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>

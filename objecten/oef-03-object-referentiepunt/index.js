@@ -65,6 +65,7 @@ for (let i = 0; i < aantalPersonen ; i++){
 
 console.log("Beschrijving van de ingegeven persoon");
 
+// loop door de string en bekijk ze 1 voor 1 met forEach
 personen.forEach((persoon, index)=>{
     console.log(`Persoon ${index + 1}: ${persoon.beschrijf()}`); // index + 1 = persoon1 ipv 0
 });

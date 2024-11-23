@@ -12,7 +12,7 @@
 <body class="bg-light">
 <div class="container py-5">
 	<h1 class="text-center mb-4">Wiskunde Oefeningen Tool</h1>
-	<div id="scoreboard" class="text-center mt-4">
+	<div id="scoreboard" class="text-center mt-4 d-none">
 		<h3>Score: <span id="score">0</span> / <span id="totalQuestions">0</span></h3>
 		<p>Timer: <span id="timer">0</span> seconden</p>
 		<div id="record-message" class="alert alert-success d-none" role="alert">
@@ -36,24 +36,22 @@
 				<input type="number" class="form-control" id="numQuestions" min="1" value="10">
 			</div>
 			<div class="col-md-12 text-center">
-				<button type="submit" class="btn btn-primary">Start</button>
+				<button id="toevoegen" type="button" class="btn btn-primary">Start</button>
 			</div>
 		</form>
 	</div>
 
 	<!-- Oefeningen Container -->
-	<div id="exercise-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 d-none">
-		<!--<div class="col">
-			<div class="px-4 py-3 bg-white rounded-2 border border-2">
-				<p>110 + 152 = 162</p>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="Uw antwoord:" aria-label="Antwoord" aria-describedby="button-addon2">
-					<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
-				</div>
-			</div>
-		</div>-->
-	</div>
-
+	<div id="exercise-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+	<!--<div class="col">
+        <div class="px-4 py-3 bg-white rounded-2 border border-2">
+            <p>110 + 152 = 162</p>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Uw antwoord:" aria-label="Antwoord" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+            </div>
+        </div>
+    </div>-->
 	<!-- Scorebord en Timer -->
 
 </div>

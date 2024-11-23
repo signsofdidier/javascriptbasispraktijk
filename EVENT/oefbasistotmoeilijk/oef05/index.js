@@ -1,10 +1,15 @@
-/*Oefening: Voeg een mouseout event toe aan een p-element dat “Bedankt voor
-je bezoek!” in de console logt wanneer de muis wordt weggehaald.
-– Console Test: console.log("Bedankt voor je bezoek!"); // Verwachte
-Output: Bedankt voor je bezoek!*/
+/*
+Toon de Geklikte Coördinaten in de Console
+– Oefening: Voeg een click event toe aan de hele pagina die de coo rdinaten
+van de klikpositie (x, y) in de console logt.
+– Console Test: console.log("Klikpositie: x=100, y=200"); //
+Verwachte Output: Klikpositie: x=100, y=200
+*/
 
-let mouseOut = document.getElementById("tekst");
 
-mouseOut.addEventListener("mouseout", function (event){
-    console.log("Bedankt voor je bezoek!");
-})
+document.addEventListener("click", function(e){
+    console.log(`Klikpositie: x=${e.clientX}, y=${e.clientY}`);
+});
+
+// (e) is zelfde als (event)
+

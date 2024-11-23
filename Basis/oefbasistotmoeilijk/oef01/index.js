@@ -1,17 +1,10 @@
-// function groet(){
-//     return 'Hallo!';
-// }
-//
-// groet();
-//
-// const groet = function (){
-//     return 'Hallo!';
-// }
+/*
+Schrijf een functie telOp(a, b) die twee getallen optelt en de som retourneert.
+– Console Test: console.log(telOp(5, 3)); // Verwachte Output: 8
+*/
 
-// const groet = () => "Hallo!";
+function telOp(a,b){
+    return a + b;
+}
 
-let woord= "pimperzele";
-console.log(woord.length);
-
-let character = "a";
-console.log(character.charCodeAt(0));
+console.log(telOp(5,3));

@@ -12,28 +12,46 @@
 
 <script>
 
-/*
-	Oefening 4: Static methodes
-	Maak een class MathUtils met:
+/*	Oefening 5: Getter en Setter
+	Maak een class Person met de volgende eigenschappen:
 
-			Een static methode add(a, b) die de som van twee getallen retourneert.
-			Een static methode multiply(a, b) die het product van twee getallen retourneert.
-			Probeer deze static methodes aan te roepen zonder een object te maken.
-*/
+			Een private eigenschap #age.
+			Een getter age om de waarde van #age op te halen.
+			Een setter age om een nieuwe waarde aan #age toe te wijzen, maar controleer dat de leeftijd een positief getal is.
+			Bonus: Voeg een methode celebrateBirthday() toe die de leeftijd met 1 verhoogt.*/
 
-class MathUtils {
-	static add(a, b) {
-		return a + b;
+class Person {
+	#age;
+
+	constructor(age) {
+		this.#age = age > 0 ? age : 0; // Validatie
 	}
 
-	static multiply(a, b) {
-		return a * b;
+	get age() {
+		return this.#age;
+	}
+
+	set age(newAge) {
+		if (newAge > 0) {
+			this.#age = newAge;
+		} else {
+			console.log("Leeftijd moet positief zijn.");
+		}
+	}
+
+	celebrateBirthday() {
+		this.#age++;
+		console.log("Gefeliciteerd! Je bent nu", this.#age);
 	}
 }
 
 // Test
-console.log(MathUtils.add(3, 7)); // Output: 10
-console.log(MathUtils.multiply(4, 5)); // Output: 20
+const person = new Person(25);
+console.log(person.age);
+person.celebrateBirthday();
+person.age = -5; // Invalid
+console.log(person.age);
+
 
 
 </script>

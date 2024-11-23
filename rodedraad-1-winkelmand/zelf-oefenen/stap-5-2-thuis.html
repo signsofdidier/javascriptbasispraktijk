@@ -31,7 +31,7 @@
 		return totalPrice.toFixed(2);
 	}
 
-	function updateCartDiplay(){
+	function updateCartDisplay(){
 		const productList = document.getElementById("product-list");
 		productList.textContent = "";
 
@@ -79,14 +79,12 @@
 
 		cart.push(product);
 
-		updateCartDiplay();
+		updateCartDisplay();
 
 		document.getElementById("total-price").innerText = `Totaal: € ${calculateTotalPrice()}`;
 
 		// onderaan houden
 		clearInputFields()
-
-
 
 	});
 </script>

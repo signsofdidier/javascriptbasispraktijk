@@ -1,13 +1,14 @@
 /*
-Schrijf een functie isEven(getal) die controleert of een getal even is en true
-retourneert als dat zo is, anders false.
-– Console Test:
-    • console.log(isEven(6)); // Verwachte Output: true
-• console.log(isEven(7)); // Verwachte Output: false*/
+Schrijf een functie keerOm(tekst) die een string omkeert en de omgekeerde
+string retourneert.
+– Console Test: console.log(keerOm("JavaScript")); // Verwachte
+Output: "tpircSavaJ"
+*/
 
-function isEven(getal){
-    return getal % 2 === 0;
+function keerOm(tekst){
+    const tekstArray = Array.from(tekst);
+    const tekstReverse = tekstArray.reverse();
+    return tekstReverse.join('');
 }
 
-console.log(isEven(6));
-console.log(isEven(7));
+console.log(keerOm("JavaScript"));

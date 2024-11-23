@@ -65,6 +65,20 @@
 		findInstrumentByName(name) {
 			return this.instruments.find((instrument) => instrument.name === name);
 		}
+
+		// Bereken de totale waarde van de inventaris
+		getTotalValue() {
+		    return this.instruments.reduce((total, instrument) => total + instrument.price, 0);
+		}
+		// Verwijder een instrument uit de inventaris op basis van naam (filter).
+		removeInstrumentByName(name){
+			this.instruments = this.instruments.filter((instrument) =>
+					instrument.name !== name);
+		}
+		// Sorteer instrumenten op prijs
+		sortByPrice(){
+			this.instruments.sort((a, b) => a.price - b.price);
+		}
 	}
 
 	// Test de Inventory class
@@ -81,6 +95,16 @@
 	console.log('--- Zoek instrument ---');
 	const foundInstrument = inventory.findInstrumentByName('Gitaar');
 	console.log(foundInstrument ? foundInstrument.getInfo() : 'Instrument niet gevonden.');
+
+	// Test de uitbreidingen
+	console.log('--- Totale waarde van de inventaris ---');
+	console.log(`Totale waarde: €${inventory.getTotalValue().toFixed(2)}`); //Verwacht: Totale waarde: €3400.00
+	console.log('--- Verwijder instrument ---');
+	inventory.removeInstrumentByName('Piano');
+	inventory.listInstruments(); // Verwacht: Geen piano meer in de lijst.
+	console.log('--- Sorteer instrumenten op prijs ---');
+	inventory.sortByPrice();
+	inventory.listInstruments();
 
 </script>
 

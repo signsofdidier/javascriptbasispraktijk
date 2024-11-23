@@ -1,100 +1,65 @@
-// math.random()
-// hoeveel cijfers(digits) de getallen in de oefenening moeten bevatten
-// 1 tot 3 cijfers, of precies 3 cijfers (if else)
-//
+function maakRandomGetal(digitsMin, digitsMax){
+    //hoe laat ik nu de computer random digitsmin of digitsmax kiezen?
+    let aantalDigits = Math.floor(Math.random() * (parseInt(digitsMax) - parseInt(digitsMin) + 1)) + parseInt(digitsMin);
+
+    eenRandomGetal = Math.floor(Math.random()* (10**parseInt(aantalDigits)));
+    return eenRandomGetal;
+}
 
 
-//2. Vraag hoeveel oefeningen er moeten komen
+document.getElementById('toevoegen').addEventListener('click', function () {
+    let digitsMin = document.getElementById('digits-min').value;
+    let digitsMax = document.getElementById('digits-max').value;
+    const aantalOef = document.getElementById('numQuestions').value;
 
-//4. elk antwoordveld toont een som bijv. 110 + 152 =
+    // Haal de exercise-container op
+    const exerciseContainer = document.getElementById('exercise-container');
 
-// alle variabelen opsommen
-// maak oefening voor 1 vakje
-// math.random() tussen 0 en 1 dus * 10 voor 1 digit, *100 voor 2 digits.
-//
+    // Maak de exercise-container leeg om nieuwe vragen toe te voegen
+    exerciseContainer.innerHTML = '';
 
-/*class Oefening{
-    constructor(digitsMin, digitsMax, exerciseContainer) {
-        this.digitsMin = digitsMin;
-        this.digitsMax = digitsMax;
-        this.exerciseContainer = exerciseContainer;
+    for (let teller = 1; teller <= aantalOef; teller++) {
+        let getal1 = maakRandomGetal(digitsMin, digitsMax);
+        let getal2 = maakRandomGetal(digitsMin, digitsMax);
+
+        // Maak een label voor de som zonder het antwoord
+        let label = document.createElement('label');
+        label.classList.add("form-label");
+        label.textContent = `${getal1} + ${getal2} = `;
+
+        // Maak een invoerveld waar de gebruiker het antwoord kan invoeren
+        let input = document.createElement('input');
+        input.type = 'number';
+        input.classList.add("form-control", "answer-input");
+        input.placeholder = 'Antwoord';
+
+        // Maak de card-div en voeg de label en input eraan toe
+        let cardDiv = document.createElement('div');
+        cardDiv.classList.add("card", "py-4", "px-3");
+        cardDiv.appendChild(label);
+        cardDiv.appendChild(input);
+
+        // Maak de col-div die de card-div omsluit
+        let colDiv = document.createElement('div');
+        colDiv.classList.add("col"); // Zorgt ervoor dat elke kaart een kolom krijgt
+        colDiv.appendChild(cardDiv); // Voeg de card-div toe aan de col-div
+
+        // Voeg de col-div toe aan de exercise-container
+        exerciseContainer.appendChild(colDiv);
     }
-
-    beschrijf(){
-        return `${this.productnaam}, Klantnaam: ${this.klantnaam}, Status: ${this.status}`
-    }
-}*/
-
-const scoreboard = document.getElementById("scoreboard");
-const recordMessage = document.getElementById("record-message");
-const settingsForm = document.getElementById("settings-form");
-
-
-
-/* De knop voor oefeningen aan te maken */
-document.getElementById("settings-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // voorkomt dat het formulier wordt verzonden
-
-    // Haal de huidige waarden op van de inputvelden
-    /*const digitsMin = parseInt(document.getElementById("digits-min").value);
-    const digitsMax = parseInt(document.getElementById("digits-max").value);
-
-    function randomDigit(digitsMin, digitsMax){
-        if (digitsMin > 10){
-            return Math.floor(Math.random() * 10);
-        }
-    }
-    console.log(randomDigit(digitsMin));
-    console.log(randomDigit(digitsMax));*/
-
-    /* variable voor hoeveelheid oefeningen value */
-    const numQuestions = parseInt(document.getElementById("numQuestions").value);
-
-    /*For loop voor alle oefeningen aan te maken volgende de ingegeven hoeveelheid*/
-    for (let i = 1; i<=numQuestions; i++){
-
-        /*Create alle elementen voor de excercise div*/
-        const exerciseContainer = document.getElementById("exercise-container");
-        exerciseContainer.classList.remove("d-none");
-        const excerciseCol = document.createElement("div");
-        excerciseCol.classList.add("col");
-        const excerciseDiv = document.createElement("div");
-        excerciseDiv.classList.add("px-4", "py-3", "bg-white", "rounded-2", "border", "border-2");
-        const excerciseParagraaf = document.createElement("p");
-        excerciseParagraaf.textContent = "110 + 152 =";
-        const excerciseInputGroupDiv = document.createElement("div");
-        excerciseInputGroupDiv.classList.add("input-group", "mb-3");
-        const excerciseInput = document.createElement("input");
-        excerciseInput.classList.add("form-control");
-        excerciseInput.type = "text";
-        excerciseInput.placeholder = "Uw antwoord:";
-        const excerciseSubmitButton = document.createElement("button");
-        excerciseSubmitButton.classList.add("btn", "btn-outline-secondary");
-        excerciseSubmitButton.type = "submit";
-        excerciseSubmitButton.textContent = "Submit";
-
-        /*Voeg alle childs toe aan de parents*/
-        exerciseContainer.appendChild(excerciseCol);
-        excerciseCol.appendChild(excerciseDiv);
-        excerciseDiv.appendChild(excerciseParagraaf);
-        excerciseDiv.appendChild(excerciseInputGroupDiv);
-        excerciseInputGroupDiv.appendChild(excerciseInput);
-        excerciseInputGroupDiv.appendChild(excerciseSubmitButton);
-    }
-
-    /* Teller */
-    let count = 120;
-    const countdown = setInterval(function() {
-        count--;
-        const timerElement = document.getElementById("timer");
-        timerElement.textContent = count;
-
-        if (count === 0) {
-            clearInterval(countdown); // Stop de intervaltimer
-            timerElement.style.color ="red";
-            alert("Tijd is op.");
-        }
-    }, 1000);
-
 });
 
+//1 digits, bijv. 5
+//2 digits, bijv. 56
+//3 digits, bijv. 683
+
+
+//random getal tussen 1 en 9
+//Math.random = getal tussen 0 en 1 geven = bijv. 0.57123546
+// 0.57123546 * 10 = 5,7123546
+//Math.floor zorgt voor afronding naar beneden = 5
+//Math.ceil zorgt voor afronding naar boven = 6
+
+// console.log(Math.floor(Math.random()*10));//1 digit
+// console.log(Math.floor(Math.random()*100));//2 digit
+// console.log(Math.floor(Math.random()*1000));//3 digit

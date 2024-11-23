@@ -2,27 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Axios fakestore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axios Fakestore</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-
     <style>
         .card-img-top {
-            height: 180px; /* Standaard hoogte voor alle afbeeldingen */
-            object-fit: contain; /* Zorgt ervoor dat de afbeelding wordt geschaald en bijgesneden */
-            width: 100%; /* Houd de breedte gelijk aan de kaart */
+            height: 180px;
+            object-fit: contain;
+            width: 100%;
         }
 
-        .card{
+        .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .card:hover{
+
+        .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+        }
+
+        .floating-cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+            width: 60px;
+            height: 60px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .floating-cart:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .floating-cart .badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            color: #fff;
         }
     </style>
 </head>
@@ -51,9 +84,12 @@
                 <li class="nav-item px-lg-2 mx-2">
                     <a class="nav-link" href="#"><i class="bi bi-person-circle fs-3"></i></a>
                 </li>
-                <li class="nav-item px-lg-4">
-                    <a type="button" class="btn btn-dark" href="#"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                        <i class="bi bi-cart3"></i> Winkelwagen
+                <li class="nav-item px-lg-4 position-relative">
+                    <a type="button" class="btn btn-dark position-relative" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                            0
+                        </span>
                     </a>
                 </li>
             </ul>
@@ -74,11 +110,14 @@
 </header>
 
 <section class="container my-5 text-center">
-    <!-- Resultaten -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="products-lijst"></div>
 </section>
 
-
+<!-- Floating Cart Icon -->
+<div class="floating-cart" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+    <i class="bi bi-cart3 fs-3"></i>
+    <span id="floatingCartBadge" class="badge d-none">0</span>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -88,76 +127,133 @@
         duration: 1000,
         once: true
     });
-</script>
-<script>
-    // Functie om de products op te halen
-    function fakeStore() {
 
-        const url = `https://fakestoreapi.com/products`;
-        // Axios gebruiken om de gegevens op te halen
-        axios.get(url)
-            .then(response => { // hierin zit inhoud van url
-                console.log(response.data);
+    document.addEventListener("DOMContentLoaded", function () {
+        let addToCart = [];
 
-                const products = response.data; //drinks is hier wat aangepast moet worden volgends de api
-                if (!products) {
-                    // Als er geen products zijn, toon een bericht
-                    document.getElementById("products-lijst").innerHTML = `
-                        <div class="alert alert-warning" role="alert">
-                            Geen products gevonden.
-                        </div>`;
-                    return;
-                }
+        function updateCartBadge() {
+            const navbarBadge = document.getElementById('cartBadge');
+            const floatingBadge = document.getElementById('floatingCartBadge');
+            const itemCount = addToCart.length;
 
-                // Dynamisch de producten weergeven in cards
-                let outputHTML = '';
-                products.forEach(product => {
-                    /*console.log(product.flags.svg);*/
-                    outputHTML += `
-                        <div class="col" data-aos="fade-up">
-                            <div class="card h-100 text-center">
-                                <img src="${product.image}" class="card-img-top p-3" alt="${product.title}">
-                                <div class="card-body d-flex flex-column justify-content-between">
-                                <p class="card-text text-muted mb-2">${product.category}</p>
-                                    <p class="mb-1">Rating: <span class="badge text-bg-primary ms-1">${product.rating.rate}</span></p>
-                                    <h5 class="card-title">${product.title}</h5>
+            if (itemCount > 0) {
+                navbarBadge.textContent = itemCount;
+                navbarBadge.classList.remove('d-none');
 
-                                    <p class="card-text fs-4 mt-2"><strong>€ ${product.price}</strong></p>
-                                    <a href="#" class="btn btn-warning fs-5"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-cart3 me-2 fs-4"></i> Add to cart</a>
+                floatingBadge.textContent = itemCount;
+                floatingBadge.classList.remove('d-none');
+            } else {
+                navbarBadge.classList.add('d-none');
+                floatingBadge.classList.add('d-none');
+            }
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.querySelector('#cartItems');
+            if (addToCart.length === 0) {
+                cartItems.innerHTML = '<li class="list-group-item">De winkelwagen is leeg!</li>';
+                document.getElementById('CartTotal').textContent = '0.00';
+                updateCartBadge();
+                return;
+            }
+
+            cartItems.innerHTML = addToCart
+                .map((item, index) => `
+                    <li class="list-group-item d-flex align-items-center">
+                        <img src="${item.image}" alt="${item.title}" class="me-3" style="height: 50px; width: 50px; object-fit: contain;">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">${item.title}</h6>
+                            <small class="text-muted">€ ${item.price.toFixed(2)}</small>
+                        </div>
+                        <button class="btn btn-danger btn-sm" onclick="cartItemDelete(${index})">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </li>
+                `).join('');
+
+            const total = addToCart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('CartTotal').textContent = total.toFixed(2);
+
+            updateCartBadge();
+        }
+
+        window.cartItemDelete = function (index) {
+            addToCart.splice(index, 1);
+            updateCartDisplay();
+        };
+
+        document.getElementById('clearCart').addEventListener('click', () => {
+            addToCart = [];
+            updateCartDisplay();
+        });
+
+        function fakeStore() {
+            const url = `https://fakestoreapi.com/products`;
+            axios.get(url)
+                .then(response => {
+                    const products = response.data;
+                    let outputHTML = '';
+                    products.forEach(product => {
+                        outputHTML += `
+                            <div class="col" data-aos="fade-up">
+                                <div class="card h-100 text-center">
+                                    <img src="${product.image}" class="card-img-top p-3" alt="${product.title}">
+                                    <div class="card-body d-flex flex-column justify-content-between">
+                                        <p class="card-text text-muted mb-2">${product.category}</p>
+                                        <p class="mb-1">Rating: <span class="badge text-bg-primary ms-1">${product.rating.rate}</span></p>
+                                        <h5 class="card-title">${product.title}</h5>
+                                        <p class="card-text fs-4 mt-2"><strong>€ ${product.price}</strong></p>
+                                        <button class="btn btn-warning fs-5 add-to-cart-btn"
+                                            data-title="${product.title}"
+                                            data-image="${product.image}"
+                                            data-price="${product.price}">
+                                            <i class="bi bi-cart3 me-2 fs-4"></i> Add to cart
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    });
+
+                    document.getElementById("products-lijst").innerHTML = outputHTML;
+
+                    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const productTitle = this.getAttribute('data-title');
+                            const productImage = this.getAttribute('data-image');
+                            const productPrice = parseFloat(this.getAttribute('data-price'));
+
+                            addToCart.push({
+                                title: productTitle,
+                                image: productImage,
+                                price: productPrice
+                            });
+                            updateCartDisplay();
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.log("Error loading products:", error);
                 });
+        }
 
-                // Voeg de kaarten toe aan de container
-                document.getElementById("products-lijst").innerHTML = outputHTML;
-            })
-            .catch(error => {
-                console.error("Fout bij het ophalen van gegevens:", error);
-                document.getElementById("products-lijst").innerHTML = `
-                    <div class="alert alert-danger" role="alert">
-                        Er is een fout opgetreden bij het ophalen van de gegevens.
-                    </div>`;
-            });
-    }
-
-    fakeStore();
+        fakeStore();
+    });
 </script>
-
 
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header bg-warning">
-        <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Seg.. </h2>
-
+        <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Winkelwagen</h2>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <p class="fs-3">Niet teveel verwachten eh!</p>
+        <ul id="cartItems" class="list-group mb-4"></ul>
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold">Totaal:</h4>
+            <h4 class="fw-bold">€ <span id="CartTotal">0.00</span></h4>
+        </div>
+        <button id="clearCart" class="btn btn-danger mt-3 w-100">Leeg winkelwagen</button>
     </div>
 </div>
-
-
-
 </body>
 </html>

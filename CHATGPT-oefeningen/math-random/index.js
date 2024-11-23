@@ -1,65 +1,34 @@
-let tasks = [];  // Hier slaan we alle taken op in een array
+// 1. Schrijf een functie dobbelsteen() die een willekeurig getal tussen 1 en 6 (inclusief) retourneert.
 
-// Functie om een nieuwe taak toe te voegen
-function addTask(){
-    const taskInput = document.getElementById("taskInput");
-    const task = taskInput.value; // neem de inhoud value van taskInput veld
+// Gebruik Math.random() om een willekeurig getal tussen 0 (inclusief) en 1 (exclusief) te krijgen.
+// Vermenigvuldig dit resultaat met 6, zodat het bereik verandert naar 0 tot net onder 6.
+// Rond dit getal naar beneden af met Math.floor() om een geheel getal te krijgen tussen 0 en 5.
+// Voeg 1 toe aan het resultaat om het bereik te verschuiven naar 1 tot en met 6, zodat het een geldige dobbelsteenwaarde is.
 
-    if (task) { // Controleer of het invoerveld niet leeg is
-        tasks.push(task); // Voeg taak toe aan array met .push
-        taskInput.value = ""; // Maak het invoerveld leeg
-        updateTaskList(); // Werk de lijst bij
-        showAlert("Taak toegevoegd!", "success");
+function dobbelsteen(){
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+console.log(dobbelsteen());
+
+// 2. Schrijf een functie willekeurigeNamenLijst() die een array met willekeurige namen teruggeeft. De array moet 3 namen bevatten, en elke naam kan een willekeurig gekozen naam zijn uit een lijst die je zelf aanmaakt (bijvoorbeeld ["Anna", "Bram", "Celine", "David"])
+
+//     Maak een array namen met een paar naamopties, bijvoorbeeld ["Anna", "Bram", "Celine", "David"].
+//     Maak een lege array lijst om de willekeurige namen op te slaan.
+//     Gebruik een for-lus om drie namen te kiezen:
+//     Genereer een willekeurige index tussen 0 en de lengte van de namen-array.
+//     Kies een naam uit de namen-array met de willekeurige index.
+//     Voeg de gekozen naam toe aan de lijst.
+//     Retourneer de lijst na de lus.
+
+function willekeurigeNamenLijst(){
+    const namen = ["Anna", "Bram", "Celine", "David"];
+    const lijst = [];
+    for (let i = 0; i < 3; i++){
+        const randomIndex = Math.floor(Math.random() * namen.length);
+        lijst.push(namen[randomIndex]);
     }
+    return lijst;
 }
 
-// neem id van de knop en doe iets als je klikt met de voorgemaakte functie 'addTask'
-// Event listener voor de knop "Taak toevoegen"
-document.getElementById("addTaskButton").addEventListener("click", addTask);
-
-// Functie om de takenlijst bij te werken
-function updateTaskList() {
-    const taskList = document.getElementById("taskList");
-    taskList.innerHTML = ""; // Maak de lijst leeg om deze te herladen
-
-    tasks.forEach(function(task, index){
-        const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between align-items-center";
-        li.innerText = task;
-
-        // Verwijder-knop voor elke taak
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "btn btn-danger btn-sm";
-        deleteButton.innerText = "Verwijderen";
-        deleteButton.onclick = function (){
-            removeTask(index);
-        }
-
-        li.appendChild(deleteButton);
-        taskList.appendChild(li);
-    });
-}
-
-// Functie om een specifieke taak te verwijderen
-function removeTask(index) {
-    tasks.splice(index, 1); // Verwijder taak uit array
-    updateTaskList(); // Werk de lijst bij
-}
-
-// Functie om een melding weer te geven
-function showAlert(message, type) {
-    // Selecteer het alertBox-element
-    var alertBox = document.getElementById("alertBox");
-
-    // Voeg de Bootstrap alert HTML toe met dynamisch type en bericht
-    alertBox.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                             ${message}
-                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
-
-    // Zorg ervoor dat de alert na 2 seconden automatisch verdwijnt
-    setTimeout(function() {
-        var alert = bootstrap.Alert.getOrCreateInstance(alertBox.querySelector('.alert'));
-        alert.close();
-    }, 2000);
-}
+console.log(willekeurigeNamenLijst());

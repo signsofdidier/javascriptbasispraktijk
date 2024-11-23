@@ -1,78 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>JavaScript Stijl Manipulatie</title>
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<!-- JavaScript bestand -->
+	<title>Wiskunde Oefeningen Tool</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="./index.js" defer></script>
+
 </head>
-<body>
-
-<div class="container my-5">
-	<h2>Nieuwe Bestelling Toevoegen</h2>
-	<form id="orderForm" class="mb-4">
-		<div class="mb-3">
-			<label for="productName" class="form-label">Productnaam</label>
-			<input type="text" class="form-control" id="productName" required>
-		</div>
-		<div class="mb-3">
-			<label for="customerName" class="form-label">Klantnaam</label>
-			<input type="text" class="form-control" id="customerName" required>
-		</div>
-		<div class="mb-3">
-			<label for="orderStatus" class="form-label">Status</label>
-			<select class="form-select" id="orderStatus" required>
-				<option value="In afwachting">In afwachting</option>
-				<option value="In behandeling">In behandeling</option>
-				<option value="Verzonden">Verzonden</option>
-			</select>
-		</div>
-		<button type="submit" class="btn btn-primary">Bestelling Toevoegen</button>
-	</form>
-
-	<!-- Tabs voor bestellingen per status -->
-	<ul class="nav nav-tabs" id="orderTabs" role="tablist">
-		<li class="nav-item" role="presentation">
-			<button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">In afwachting</button>
-		</li>
-		<li class="nav-item" role="presentation">
-			<button class="nav-link" id="processing-tab" data-bs-toggle="tab" data-bs-target="#processing" type="button" role="tab" aria-controls="processing" aria-selected="false">In behandeling</button>
-		</li>
-		<li class="nav-item" role="presentation">
-			<button class="nav-link" id="shipped-tab" data-bs-toggle="tab" data-bs-target="#shipped" type="button" role="tab" aria-controls="shipped" aria-selected="false">Verzonden</button>
-		</li>
-	</ul>
-	<div class="tab-content mt-4">
-		<div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-			<ul id="pendingList" class="list-group"></ul>
-		</div>
-		<div class="tab-pane fade" id="processing" role="tabpanel" aria-labelledby="processing-tab">
-			<ul id="processingList" class="list-group"></ul>
-		</div>
-		<div class="tab-pane fade" id="shipped" role="tabpanel" aria-labelledby="shipped-tab">
-			<ul id="shippedList" class="list-group"></ul>
+<body class="bg-light">
+<div class="container py-5">
+	<h1 class="text-center mb-4">Wiskunde Oefeningen Tool</h1>
+	<div id="scoreboard" class="text-center mt-4">
+		<h3>Score: <span id="score">0</span> / <span id="totalQuestions">0</span></h3>
+		<p>Timer: <span id="timer">0</span> seconden</p>
+		<div id="record-message" class="alert alert-success d-none" role="alert">
+			Fantastisch, nieuw record!
 		</div>
 	</div>
-</div>
 
-<!-- Toastmelding bij het toevoegen van een bestelling -->
-<div class="toast-container top-0 end-0 p-4">
-	<div id="orderToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
-		<div class="toast-header">
-			<strong class="me-auto">Nieuwe Bestelling</strong>
-			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-		</div>
-		<div class="toast-body" id="toastBody">
-			<!-- Inhoud van de toast wordt dynamisch toegevoegd -->
-		</div>
+	<!-- Instellingen Formulier -->
+	<div class="card p-3 mb-4">
+		<form id="settings-form" class="row g-3">
+			<div class="col-md-3">
+				<label for="digits-min" class="form-label">Aantal cijfers (van)</label>
+				<input type="number" class="form-control" id="digits-min" min="1" max="3" placeholder="Min. cijfers">
+			</div>
+			<div class="col-md-3">
+				<label for="digits-max" class="form-label">Aantal cijfers (tot)</label>
+				<input type="number" class="form-control" id="digits-max" min="1" max="3" placeholder="Max. cijfers">
+			</div>
+			<div class="col-md-6">
+				<label for="numQuestions" class="form-label">Aantal vragen</label>
+				<input type="number" class="form-control" id="numQuestions" min="1" value="10">
+			</div>
+			<div class="col-md-12 text-center">
+				<button type="submit" class="btn btn-primary">Start</button>
+			</div>
+		</form>
 	</div>
+
+	<!-- Oefeningen Container -->
+	<div id="exercise-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 d-none">
+		<!--<div class="col">
+			<div class="px-4 py-3 bg-white rounded-2 border border-2">
+				<p>110 + 152 = 162</p>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="Uw antwoord:" aria-label="Antwoord" aria-describedby="button-addon2">
+					<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+				</div>
+			</div>
+		</div>-->
+	</div>
+
+	<!-- Scorebord en Timer -->
+
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
 </body>
 </html>
