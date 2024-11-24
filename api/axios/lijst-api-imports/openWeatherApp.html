@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weer App</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Weer in jouw Stad</h1>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <!-- Stad invoer -->
+            <div class="mb-3">
+                <label for="city" class="form-label">Voer een stad in:</label>
+                <input type="text" class="form-control" id="city" placeholder="Bijv. Amsterdam">
+            </div>
+            <!-- Zoek knop -->
+            <button onclick="zoekWeer()" class="btn btn-primary w-100">Zoek Weer</button>
+        </div>
+    </div>
+
+    <!-- Resultaten -->
+    <div id="weatherResult" class="mt-4" style="display: none;">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" id="cityName"></h4>
+                <p class="card-text">
+                    <strong>Temperatuur:</strong> <span id="temperature"></span> °C<br>
+                    <strong>Weer:</strong> <span id="weatherDescription"></span><br>
+                    <strong>Luchtvochtigheid:</strong> <span id="humidity"></span> %<br>
+                    <strong>Windsnelheid:</strong> <span id="windSpeed"></span> m/s
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Foutmelding -->
+    <div id="errorMessage" class="mt-4 text-danger" style="display: none;">
+        <p>Er is iets misgegaan bij het ophalen van het weer. Controleer de stad en probeer het opnieuw.</p>
+    </div>
+</div>
+
+<!-- Bootstrap 5.3 JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    const apiKey = '4770c69ef993a0e5f0fa3f82081c931a'; // Vervang met je eigen API-sleutel van OpenWeather
+    const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+    // Functie om het weer op te halen
+    function zoekWeer() {
+        // Verkrijg de stad uit het inputveld
+        const city = document.getElementById("city").value.trim();
+
+        if (!city) {
+            alert("Voer een stad in om te zoeken!");
+            return;
+        }
+
+        const url = `${apiUrl}?q=${city}&appid=${apiKey}&units=metric&lang=nl`;
+
+        // Axios GET-aanroep
+        axios.get(url)
+            .then(function(response) {
+                const data = response.data;
+                if (data.cod !== 200) {
+                    // Als de stad niet gevonden wordt, geef een foutmelding weer
+                    document.getElementById("errorMessage").style.display = 'block';
+                    document.getElementById("weatherResult").style.display = 'none';
+                    return;
+                }
+
+                // Weergeven van de resultaten
+                document.getElementById('cityName').textContent = `${data.name}, ${data.sys.country}`;
+                document.getElementById('temperature').textContent = data.main.temp;
+                document.getElementById('weatherDescription').textContent = data.weather[0].description;
+                document.getElementById('humidity').textContent = data.main.humidity;
+                document.getElementById('windSpeed').textContent = data.wind.speed;
+
+                // Toon de resultaten en verberg foutmeldingen
+                document.getElementById('weatherResult').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+            })
+            .catch(function(error) {
+                console.error("Fout bij het ophalen van gegevens:", error);
+                // Als er een fout is, geef een foutmelding weer
+                document.getElementById("errorMessage").style.display = 'block';
+                document.getElementById("weatherResult").style.display = 'none';
+            });
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axios Landen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Landen met Axios</h1>
+    <div class="mb-3 d-flex justify-content-center">
+        <input type="text" id="landValue" class="form-control me-2 w-50" placeholder="Voer een land in">
+        <select class="form-select me-2" id="selectContinents" aria-label="Selecteer een continent">
+            <option selected value="">Alle continenten</option>
+        </select>
+        <button onclick="getLanden()" class="btn btn-primary">
+            <i class="bi bi-search"></i> Zoeken
+        </button>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="landen-lijst"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let allLanden = [];
+    let uniqueContinents = [];
+
+    // Laad continenten in de select
+    function loadContinents() {
+        uniqueContinents = [...new Set(allLanden.map(land => land.region).filter(region => region))];
+
+        const selectContinents = document.getElementById("selectContinents");
+        let optionsHTML = `<option selected value="">Alle continenten</option>`;
+        uniqueContinents.forEach(continent => {
+            optionsHTML += `<option value="${continent}">${continent}</option>`;
+        });
+        selectContinents.innerHTML = optionsHTML;
+    }
+
+    // Haal alle landen op en toon deze
+    function getAllLanden() {
+        axios.get('https://restcountries.com/v3.1/all')
+            .then(response => {
+                allLanden = response.data;
+                displayLanden(allLanden);
+                loadContinents();
+            })
+            .catch(error => {
+                console.error("Fout bij het laden van landen:", error);
+                document.getElementById("landen-lijst").innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        Fout bij het laden van landen.
+                    </div>`;
+            });
+    }
+
+    // Filter landen en toon deze
+    function getLanden() {
+        const landValue = document.getElementById("landValue").value.trim();
+        const selectedContinent = document.getElementById("selectContinents").value;
+
+        let filteredLanden = allLanden;
+
+        if (landValue) {
+            filteredLanden = filteredLanden.filter(land =>
+                land.name.common.toLowerCase().includes(landValue.toLowerCase())
+            );
+        }
+
+        if (selectedContinent) {
+            filteredLanden = filteredLanden.filter(land => land.region === selectedContinent);
+        }
+
+        displayLanden(filteredLanden);
+
+        // Velden legen na zoekactie
+        document.getElementById("landValue").value = ''; // Leeg het zoekveld
+        document.getElementById("selectContinents").value = ''; // Reset de continent keuzelijst
+    }
+
+    // Toon landen in de HTML
+    function displayLanden(landen) {
+        const landenLijst = document.getElementById("landen-lijst");
+        if (landen.length === 0) {
+            landenLijst.innerHTML = `
+                <div class="alert alert-warning" role="alert">
+                    Geen landen gevonden.
+                </div>`;
+            return;
+        }
+
+        let outputHTML = '';
+        landen.forEach(land => {
+            const talen = land.languages ? Object.values(land.languages).join(', ') : 'Geen talen beschikbaar';
+            const hoofdstad = land.capital ? land.capital[0] : 'Geen hoofdstad';
+            const vlag = land.flags?.svg || land.flags?.png;
+
+            outputHTML += `
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="${vlag}" class="card-img-top" alt="Vlag van ${land.name.common}" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">${land.name.common}</h5>
+                            <p><strong>Hoofdstad:</strong> ${hoofdstad}</p>
+                            <p><strong>Talen:</strong> ${talen}</p>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-${land.cca3}">
+                                Meer info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="modal-${land.cca3}" tabindex="-1" aria-labelledby="modalLabel-${land.cca3}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel-${land.cca3}">${land.name.common}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="${vlag}" class="img-fluid mb-3" alt="Vlag van ${land.name.common}">
+                            <p><strong>Bevolking:</strong> ${land.population.toLocaleString()}</p>
+                            <p><strong>Continent:</strong> ${land.region}</p>
+                            <p><strong>Timezones:</strong> ${land.timezones ? land.timezones.join(', ') : 'Geen'}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           `;
+            });
+
+            landenLijst.innerHTML = outputHTML;
+            }
+
+            // Laad standaard alle landen bij het starten
+            getAllLanden();
+</script>
+</body>
+</html>

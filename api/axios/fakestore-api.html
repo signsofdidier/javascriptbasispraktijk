@@ -101,8 +101,7 @@
             }
 
             // Dynamische winkelwagenlijst
-            cartItems.innerHTML = addToCart
-                .map((item, index) => `
+            cartItems.innerHTML = addToCart.map((item, index) => `
                 <li class="list-group-item d-flex align-items-center">
                     <img src="${item.image}" alt="${item.title}" class="me-3" style="height: 50px; width: 50px; object-fit: contain;">
                     <div class="flex-grow-1">

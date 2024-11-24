@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axios landen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Landen met Axios</h1>
+    <div class="mb-3 d-flex justify-content-center">
+        <input type="text" id="landValue" class="form-control me-2 w-50" placeholder="Voer een land in">
+        <button onclick="getLanden()" class="btn btn-primary"><i class="bi bi-search"></i> Zoeken</button>
+    </div>
+    <!-- Resultaten -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="landen-lijst"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Functie om de landen op te halen
+    function getLanden() {
+        // Ingrediënt ophalen uit het inputveld
+        const landValue = document.getElementById("landValue").value.trim();
+        // Controleer of er een waarde in de variabele zit
+        if (!landValue) {
+            alert("Voer een land in om te zoeken!");
+            return;
+        }
+
+        const url = `https://restcountries.com/v3.1/name/${landValue}`;
+        // Axios gebruiken om de gegevens op te halen
+        axios.get(url)
+            .then(response => {
+                const landen = response.data;
+                if (!landen) {
+                    // Als er geen landen zijn, toon een bericht
+                    document.getElementById("landen-lijst").innerHTML = `
+                        <div class="alert alert-warning" role="alert">
+                            Geen landen gevonden.
+                        </div>`;
+                    return;
+                }
+
+                // Dynamisch de landen weergeven in cards
+                let outputHTML = '';
+                landen.forEach(land => {
+                    /**
+                     * Languages bevat een lijst. Roep de lijst aan via externe variable met Object.values. Dit mag ook in de p tag.
+                     */
+                    // maak eerst de variablen in de forEach
+                    const talen = land.languages ? Object.values(land.languages).join(', ') : 'geen talen beschikbaar';
+                    const capital = land.capital ? land.capital[0] : 'Geen hoofdstad';
+
+                    /**
+                     * currencies heeft een lijst EUR, .. met daarin 2 objects, zo haal je deze eruit
+                     * {
+                     *   "currencies": {
+                     *     "EUR": {
+                     *       "name": "Euro",
+                     *       "symbol": "€"
+                     *     }
+                     *   }
+                     * }
+                     *
+                     */
+                    const currencies = land.currencies
+                        ? Object.entries(land.currencies).map(([code, details]) => `${details.name} (${code})`).join(', ')
+                        : 'Geen currencies beschikbaar';
+
+
+                    outputHTML += `
+                        <div class="col">
+                            <div class="card h-100">
+                              <img src="${land.flags.svg}" class="card-img-top" alt="${land.name.common}" style="height:200px; object-fit: cover">
+                              <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title">${land.name.common}</h5>
+                                <p class="card-text mb-0 fw-semibold">Capital: ${capital}</p>
+                                <p class="card-text mb-0">Languages: ${talen}</p>
+                                <a type="button" class="btn btn-outline-dark mt-3" data-bs-toggle="modal" data-bs-target="#${land.cca3}">More info</a>
+                              </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="${land.cca3}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">${land.name.common}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <img src="${land.flags.svg}" class="img-fluid" alt="${land.name.common}">
+                                <div class="mt-3">
+                                    <p>Timezones: ${land.timezones ? land.timezones : 'Geen timezones'}</p>
+                                   <p>Population: ${land.population.toLocaleString()}</p>
+                                   <p>${currencies}</p>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    `;
+                });
+
+                // Voeg de kaarten toe aan de container
+                document.getElementById("landen-lijst").innerHTML = outputHTML;
+            })
+            .catch(error => {
+                console.error("Fout bij het ophalen van gegevens:", error);
+                document.getElementById("landen-lijst").innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        Er is een fout opgetreden bij het ophalen van de gegevens.
+                    </div>`;
+            });
+    }
+
+    getLanden()
+</script>
+</body>
+</html>

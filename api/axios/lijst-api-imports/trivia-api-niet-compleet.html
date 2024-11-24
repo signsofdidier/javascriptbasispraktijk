@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Vragen API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Willekeurige Trivia Vragen</h1>
+
+    <!-- Button om trivia op te halen -->
+    <div class="d-flex justify-content-center mb-4">
+        <button onclick="fetchTrivia()" class="btn btn-primary">
+            <i class="bi bi-search"></i> Nieuwe Trivia Vraag
+        </button>
+    </div>
+
+    <!-- Trivia vraag wordt hier in cards weergegeven -->
+    <div class="row" id="trivia-list"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Functie om willekeurige trivia vraag op te halen van de Trivia API
+    function fetchTrivia() {
+        const url = 'https://opentdb.com/api.php?amount=1&type=multiple'; // Trivia API URL voor een willekeurige vraag
+
+        // Gebruik Axios om de gegevens van de Trivia API op te halen
+        axios.get(url)
+            .then(response => {
+                console.log("API response:", response); // Log de volledige API response voor debugging
+
+                const trivia = response.data.results[0]; // Haal de eerste vraag op uit de API-respons
+
+                // Het ophalen van de container waar de trivia card wordt weergegeven
+                const triviaContainer = document.getElementById('trivia-list');
+                triviaContainer.innerHTML = ''; // Leeg de container voordat je de nieuwe vraag weergeeft
+
+                // Maak de HTML voor de card
+                const triviaCard = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${trivia.question}</h5>
+                                <p class="card-text"><strong>Categorie:</strong> ${trivia.category}</p>
+                                <p class="card-text"><strong>Correcte Antwoord:</strong> ${trivia.correct_answer}</p>
+                                <p class="card-text"><strong>Keuze Antwoorden:</strong> ${trivia.incorrect_answers.join(', ')}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Voeg de card toe aan de container
+                triviaContainer.innerHTML = triviaCard;
+            })
+            .catch(error => {
+                // Log de foutmelding voor debugging
+                console.error("Fout bij het ophalen van de API:", error.response || error.message);
+                const triviaContainer = document.getElementById('trivia-list');
+                triviaContainer.innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        Er is een fout opgetreden bij het ophalen van de trivia vraag. Controleer de console voor meer informatie.
+                    </div>
+                `;
+            });
+    }
+</script>
+</body>
+</html>
